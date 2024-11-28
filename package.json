@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "scripts": {
+    "test": "node test/run_tests.js | grep -v '^ok'"
+  },
+  "imports": {
+    "#src/*.js": "./src/*.js"
+  }
+}
