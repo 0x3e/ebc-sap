@@ -1,7 +1,6 @@
-const { Ttester } = await import('./ttester.js')
-const t = Ttester(true)
+const t = await import('./ttester.js')
 const { Clock } = await import('../src/clock.js')
 let c = {}
 
-t.isTruthy('create', () => (c = Clock()), 'truthy')
+t.isTruthy('create', () => (c = Clock()))
 t.isTrue('output', () => (c.output() === true) || (c.output() === false))
