@@ -1,9 +1,10 @@
 const t = await import('./ttester.js')
 const Gates = await import('../src/gates.js')
-let and_gate = Gates.AND
+const and = Gates.AND().simple
+
 t.isTruthy('.    |   A   |    B   |    Y   |', () => 'header')
-t.matches( '.    | (0,1) |  (0,1) |  (0,1) |', () => (typeof(and_gate(true,false))), 'boolean')
-t.isFalse( '.    |   0   |    0   |    0   |', () => and_gate(false, false))
-t.isFalse( '.    |   0   |    1   |    0   |', () => and_gate(false, true ))
-t.isFalse( '.    |   1   |    0   |    0   |', () => and_gate(true,  false))
-t.isTrue(  '.    |   1   |    1   |    1   |', () => and_gate(true,  true ))
+t.matches('.    | (0,1) |  (0,1) |  (0,1) |', () => (typeof (and(true, false))), 'boolean')
+t.isFalse('.    |   0   |    0   |    0   |', () => and(false, false))
+t.isFalse('.    |   0   |    1   |    0   |', () => and(false, true))
+t.isFalse('.    |   1   |    0   |    0   |', () => and(true, false))
+t.isTrue('.    |   1   |    1   |    1   |', () => and(true, true))

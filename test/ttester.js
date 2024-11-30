@@ -1,3 +1,4 @@
+/* global console */
 const failHard = false
 const runFun = (desc, fun, expectedResult) => {
   let result = fun()

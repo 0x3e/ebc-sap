@@ -1,3 +1,4 @@
+/* global console */
 import fs from 'fs'
 import { spawnSync } from 'child_process'
 const files = fs.readdirSync('test/')

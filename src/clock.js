@@ -16,6 +16,6 @@
 *                    | /                                                   *
 *                                                                          *
 \*                                                                        */
-export function Clock (astable_pulse, select, manual_pulse, HLT) {
+const Clock = function (astable_pulse, select, manual_pulse, HLT) {
 
 }
