@@ -1,25 +1,33 @@
-const buffer = function (processFun) {
-  let _a = undefined
-  let _y = undefined
-  const process = () => {
-    _y = processFun(_a)
-  }
-  const setA = a => { _a = a; process() }
-  const set = setA
-  const getY = () => _y
-  const output = getY
+class Buffer {
+  #a = undefined
+  #y = undefined
 
-  const simple = a => {
-    set(a)
-    process()
-    return output()
+  calculate_output(a) {
+    /* must be implemented by subclass */
+    this.#y = a
+    throw new Error('Method calculate_output not implemented')
   }
-  const toJson = () => ({a: _a, y: _y })
-  const toString = () => JSON.stringify(toJson())
 
-  return { setA, getY, set, process, output, simple, toJson, toString }
+  process() {
+    this.#y = this.calculate_output(this.#a)
+  }
+
+  set a(a) { this.#a = a; this.process() }
+  get y() { return this.#y }
+
+  simple(a) {
+    this.a = a
+    this.process()
+    return this.y
+  }
+
+  toJson() { return { a: this.#a, y: this.y } }
+  toString() { return JSON.stringify(this.toJson()) }
 }
 
-const Wire = function () { return buffer( a => a ) }
-const NOT = function () { return buffer( a => !a ) }
-export { Wire, NOT }
+export class Wire extends Buffer {
+  calculate_output (a) { return a }
+}
+export class NOT extends Buffer {
+  calculate_output (a) { return !a }
+}
