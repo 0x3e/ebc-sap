@@ -1,33 +1,83 @@
-class Gate {
-  #a = undefined
-  #b = undefined
-  #y = undefined
+/*                             Gate                                       *\
+*                        A ----|??\   Q                                    *
+*                              ??? )?---                                   *
+*                        B ----|??/                                        *
+\*                                                                        */
 
-  calculate_output(a, b) {
+export class Gate {
+  #A = undefined
+  #B = undefined
+  #Q = undefined
+  #sendsQ = []
+  static type = "Gate"
+
+  calculateOutput(a, b) {
     /* must be implemented by subclass */
-    this.#y = a && b
-    throw new Error('Method calculate_output not implemented')
+    if (/* never */ a === b && a !== b) return undefined
+    throw new Error("Method calculateOutput not implemented")
+  }
+
+  sendQ(fun) {
+    this.#sendsQ.push(fun)
   }
 
   process() {
-    this.#y = this.calculate_output(this.#a, this.#b)
+    this.#Q = this.calculateOutput(this.#A, this.#B)
+    for (const fun of this.#sendsQ) {
+      fun(this.#Q)
+    }
   }
 
-  set a(a) { this.#a = a; this.process() }
-  set b(b) { this.#b = b; this.process() }
-  get y() { return this.#y }
-
-  simple(a, b) {
-    this.a = a
-    this.b = b
+  set A(a) {
+    if (this.#A === a) return
+    this.#A = a
     this.process()
-    return this.y
   }
 
-  toJson() { return { a: this.#a, b: this.#b, y: this.y } }
-  toString() { return JSON.stringify(this.toJson()) }
+  set B(b) {
+    if (this.#B === b) return
+    this.#B = b
+    this.process()
+  }
+
+  get Q() {
+    return this.#Q
+  }
+
+  set(a, b) {
+    if (this.#A === a && this.#B === b) return this.#Q
+    this.#A = a
+    this.#B = b
+    this.process()
+    return this.#Q
+  }
+
+  static doToJSON(type, a, b, q) {
+    return {type: type, A: a, B: b, Q: q}
+  }
+  toJSON() {
+    return this.constructor.doToJSON(
+      this.constructor.type,
+      this.#A,
+      this.#B,
+      this.#Q,
+    )
+  }
+  toString() {
+    return JSON.stringify(this.toJSON())
+  }
 }
 
 export class AND extends Gate {
-  calculate_output(a, b) { return a && b }
+  static type = "Gate.AND"
+  calculateOutput(a, b) {
+    return a && b
+  }
+}
+
+export class OR extends Gate {
+  static type = "Gate.OR"
+  calculateOutput(a, b) {
+    return a || b
+  }
 }
