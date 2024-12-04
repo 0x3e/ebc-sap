@@ -3,6 +3,26 @@ const Gates = await import('../src/gates.js')
 const h = await import('../src/helpers.js')
 
 {
+  const buffer = new Gates.Buffer()
+
+  buffer.set(h.randomBit())
+  t.output(buffer.toString())
+  t.output( ".    |   A   |   Y   |")
+  t.matches(".    | (0,1) | (0,1) |", () => typeof buffer.Q, "boolean")
+  t.isFalse(".    |   0   |   0   |", () => buffer.set(false))
+  t.isTrue( ".    |   1   |   1   |", () => buffer.set(true))
+}
+{
+  const not = new Gates.NOT()
+
+  not.set(h.randomBit())
+  t.output(not.toString())
+  t.output( ".    |   A   |   Y   |")
+  t.matches(".    | (0,1) | (0,1) |", () => typeof not.Q, "boolean")
+  t.isTrue( ".    |   0   |   1   |", () => not.set(false))
+  t.isFalse(".    |   1   |   0   |", () => not.set(true))
+}
+{
   const and = new Gates.AND()
 
   and.set(h.randomBit(), h.randomBit())

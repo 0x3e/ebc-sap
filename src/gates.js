@@ -55,6 +55,7 @@ export class Gate {
   static doToJSON(type, a, b, q) {
     return {type: type, A: a, B: b, Q: q}
   }
+
   toJSON() {
     return this.constructor.doToJSON(
       this.constructor.type,
@@ -63,13 +64,36 @@ export class Gate {
       this.#Q,
     )
   }
+
   toString() {
     return JSON.stringify(this.toJSON())
   }
 }
 
+export class Wire extends Gate {
+  static type = "Gate.Wire"
+  static doToJSON(type, a, b, q) {
+    return {type: type, A: a, Q: q}
+  }
+}
+
+export class Buffer extends Wire {
+  static type = "Gate.Buffer"
+  calculateOutput(a) {
+    return a
+  }
+}
+
+export class NOT extends Wire {
+  static type = "Gate.NOT"
+  calculateOutput(a) {
+    return !a
+  }
+}
+
 export class AND extends Gate {
   static type = "Gate.AND"
+
   calculateOutput(a, b) {
     return a && b
   }
@@ -77,6 +101,7 @@ export class AND extends Gate {
 
 export class OR extends Gate {
   static type = "Gate.OR"
+
   calculateOutput(a, b) {
     return a || b
   }
