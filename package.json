@@ -1,7 +1,9 @@
 {
   "type": "module",
   "scripts": {
-    "test": "node test/run_tests.js | grep -v '^ok'"
+    "test": "node test/run_tests.js | grep -v '^ok'",
+    "server": "npx http-server",
+    "bio": "npx @biomejs/biome check"
   },
   "imports": {
     "#src/*.js": "./src/*.js"

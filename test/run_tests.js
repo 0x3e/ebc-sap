@@ -7,6 +7,6 @@ for (const file of jsFiles) {
     shell: true,
     stdio: "inherit",
   })
-  if (result.status === 0) console.log(`ok - ${file}`)
-  else console.log(`not ok - ${file}`)
+  if (result.status === 0) console.log(`ok - test/${file}`)
+  else console.log(`not ok - in test file test/${file}`)
 }

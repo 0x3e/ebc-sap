@@ -7,11 +7,12 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["node_modules/**", "test/*.tt.js"]
+    "ignore": ["node_modules/**"]
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "space"
+    "indentStyle": "space",
+    "lineWidth": 77
   },
   "organizeImports": {
     "enabled": true

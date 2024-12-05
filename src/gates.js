@@ -28,20 +28,31 @@ export class Gate {
     }
   }
 
-  set A(a) {
+  setA(a) {
     if (this.#A === a) return
     this.#A = a
     this.process()
   }
 
-  set B(b) {
+  set A(a) {
+    this.setA(a)
+  }
+
+  setB(b) {
     if (this.#B === b) return
     this.#B = b
     this.process()
   }
 
+  set B(b) {
+    this.setB(b)
+  }
+
   get Q() {
     return this.#Q
+  }
+  get type() {
+    return this.constructor.type
   }
 
   set(a, b) {
@@ -57,12 +68,7 @@ export class Gate {
   }
 
   toJSON() {
-    return this.constructor.doToJSON(
-      this.constructor.type,
-      this.#A,
-      this.#B,
-      this.#Q,
-    )
+    return this.constructor.doToJSON(this.type, this.#A, this.#B, this.#Q)
   }
 
   toString() {
@@ -104,5 +110,21 @@ export class OR extends Gate {
 
   calculateOutput(a, b) {
     return a || b
+  }
+}
+
+export class NAND extends Gate {
+  static type = "Gate.NAND"
+
+  calculateOutput(a, b) {
+    return !(a && b)
+  }
+}
+
+export class NOR extends Gate {
+  static type = "Gate.NOR"
+
+  calculateOutput(a, b) {
+    return !(a || b)
   }
 }
