@@ -1,13 +1,21 @@
-const isBrowser = typeof window !== "undefined"
-const process = {exitCode: 0}
-
-if (!isBrowser) {
-  const process = await import("node:process")
-}
-
+let allGood = true
 async function describe(desc, fun) {
   fun()
+  if (!allGood) {
+    const err = new Error()
+    const err_stack = err.stack || ""
+    const test_file = err_stack.split("\n").filter(line => {
+      return (
+        (line.match(/http/) && !line.match(/ttester/)) ||
+        line.match(/at file/)
+      )
+    })
+    console.log(`fail ${test_file.join().trim()}`)
+    console.log(`fail in ${desc}`)
+  }
+  allGood = true
 }
+
 function ttester() {
   const failHard = false
   function runFun(desc, fun, expectedResult) {
@@ -38,7 +46,7 @@ function ttester() {
     if (pass) {
       console.log(`ok - ${desc}`)
     } else {
-      process.exitCode = 222
+      allGood = false
       console.log(`not ok - ${desc}`)
       console.log(`  expected: ${expected}`)
       console.log(`  got: ${result}`)
@@ -52,7 +60,7 @@ function ttester() {
       try {
         runFun(desc, fun, expected)
       } catch (err) {
-        process.exitCode = 222
+        allGood = false
         console.log(`not ok - ${desc}`)
         console.log(`  expected: ${expected}`)
         console.log("  got: CATCH")
