@@ -1,3 +1,11 @@
+/*                            DLatch                                      *\
+*                              _____                                       *
+*                        D ----|   |---- Q                                 *
+*                              |   |                                       *
+*                       EN ----|   |---- NOTQ                              *
+*                              -----                                       *
+\*                                                                        */
+
 import {SRLatch} from "../src/sr_latch.js"
 import * as Gates from "./gates.js"
 export class DLatch {
