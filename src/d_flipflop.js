@@ -1,11 +1,17 @@
 import {DLatch} from "../src/d_latch.js"
+import {ANDEdgeDetector} from "../src/and_edge_detector.js"
 export class DFlipFlop {
   #D = undefined
   #CLK = undefined
   #Q = undefined
   #NOTQ = undefined
   #DLatch = new DLatch()
+  #ANDED = new ANDEdgeDetector()
   static type = "DFlipFlop"
+
+  constructor() {
+    this.#ANDED.sendQ(Q => this.#DLatch.setEN(Q))
+  }
 
   sendQ(fun) {
     this.#DLatch.sendQ(fun)
@@ -28,9 +34,8 @@ export class DFlipFlop {
   setCLK(clk) {
     if (this.#CLK === clk) return
     this.#CLK = clk
-    this.#DLatch.EN = clk
+    this.#ANDED.A = clk
     this.process()
-    if (this.#CLK === true) this.CLK = false
   }
 
   set CLK(clk) {

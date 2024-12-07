@@ -20,24 +20,28 @@ describe("DFlipFlop", () => {
   const dFF = new DFlipFlop()
 
   dFF.D = false
+  dFF.CLK = false
   dFF.CLK = true
   it.instance(dFF, DFlipFlop)
   it.is(dFF.type, "DFlipFlop")
   it.is(
     dFF.toString(),
-    '{"type":"DFlipFlop","D":false,"CLK":false,"Q":false,"NOTQ":true}',
+    '{"type":"DFlipFlop","D":false,"CLK":true,"Q":false,"NOTQ":true}',
   )
   it.type(dFF.Q, "boolean")
   dFF.D = true
+  dFF.CLK = false
   dFF.CLK = true
   it.is(dFF.Q, true)
   dFF.CLK = false
+  dFF.CLK = true
   it.is(dFF.Q, true)
   dFF.D = false
   it.is(dFF.Q, true)
   dFF.D = true
   it.is(dFF.Q, true)
   dFF.D = false
+  dFF.CLK = false
   dFF.CLK = true
   it.is(dFF.Q, false)
   dFF.CLK = false
@@ -47,6 +51,7 @@ describe("DFlipFlop", () => {
   dFF.CLK = true
   it.is(dFF.Q, true)
   dFF.D = false
+  dFF.CLK = false
   dFF.CLK = true
   it.is(dFF.Q, false)
 })
