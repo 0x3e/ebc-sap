@@ -15,7 +15,9 @@ describe("ANDEdgeDetector", () => {
   andED.A = false
   it.is(andED.Q, false)
   let hit = false
-  andED.sendQ( Q => { if(!hit) hit = Q })
+  andED.sendQ(Q => {
+    if (!hit) hit = Q
+  })
   andED.A = true
   it.is(hit, true, "will be hit")
   it.is(andED.Q, false)

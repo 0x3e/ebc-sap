@@ -1,5 +1,5 @@
-import {DLatch} from "../src/d_latch.js"
 import {ANDEdgeDetector} from "../src/and_edge_detector.js"
+import {DLatch} from "../src/d_latch.js"
 export class DFlipFlop {
   #D = undefined
   #CLK = undefined
