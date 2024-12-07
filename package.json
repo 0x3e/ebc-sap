@@ -4,7 +4,8 @@
   "scripts": {
     "test": "npx uvu",
     "server": "npx http-server",
-    "bio": "npx @biomejs/biome check"
+    "bio": "npx @biomejs/biome check",
+    "pack": "npx webpack"
   },
   "imports": {
     "#src/*.js": "./src/*.js"
