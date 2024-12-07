@@ -34,7 +34,7 @@ export class DLatchDisplay {
     this.#not_q = q ? 0 : 1
   }
 
-  set fromJSON(json){
+  set fromJSON(json) {
     this.D = json.D
     this.EN = json.EN
     this.Q = json.Q

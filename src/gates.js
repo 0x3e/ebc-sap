@@ -61,9 +61,9 @@ export class Gate {
     if (this.#A === a && this.#B === b) return this.#Q
     const rnd = h.randomBit()
     // prevent a bias by randomizing which is set first
-    if(rnd) this.A = a
+    if (rnd) this.A = a
     this.B = b
-    if(!rnd) this.A = a
+    if (!rnd) this.A = a
     return this.#Q
   }
 
