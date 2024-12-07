@@ -14,8 +14,20 @@ export class DLatchDisplay {
   #en = "?"
   #q = "?"
   #not_q = "?"
+  #mode = "txt"
+  #dlatch = undefined
 
-  txt = () => `\
+  set dlatch(dlatch) {
+    this.#dlatch = dlatch
+    dlatch.sendQ(Q => this.recieveQ(Q))
+  }
+
+  recieveQ(q) {
+    this.asJSON = this.#dlatch.toJSON()
+  }
+
+  txt() {
+    return `\
         DLatch           
         _______          
   D -${this.#d}--|     |--${this.#q}- Q    
@@ -24,8 +36,10 @@ export class DLatchDisplay {
         |     |          
         |     |o-${this.#not_q}- NOTQ 
         -------          `
+  }
 
-  html = () => `\
+  html() {
+    return `\
 <div class=dlatch>        DLatch           
         _______          
   D -<span class=d>${this.#d}</span>--|     |--<span class=q>${this.#q}</span>- Q    
@@ -34,6 +48,7 @@ export class DLatchDisplay {
         |     |          
         |     |o-<span class=notq>${this.#not_q}</span>- Ǭ 
         -------          </div>`
+  }
 
   set D(d) {
     this.#d = d ? 1 : 0
@@ -52,6 +67,5 @@ export class DLatchDisplay {
     this.D = json.D
     this.EN = json.EN
     this.Q = json.Q
-    this.#not_q = json.NOTQ
   }
 }

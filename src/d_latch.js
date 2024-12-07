@@ -25,7 +25,7 @@ export class DLatch {
   }
 
   sendQ(fun) {
-    this.SRLATCH.sendQ(fun)
+    this.#SRLATCH.sendQ(fun)
   }
 
   process() {

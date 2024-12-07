@@ -1,5 +1,6 @@
 import {test as describe} from "uvu"
 import * as it from "uvu/assert"
+import {DLatch} from "../src/d_latch.js"
 import {DLatchDisplay} from "../src/d_latch_display.js"
 import * as h from "../src/helpers.js"
 
@@ -62,6 +63,27 @@ describe("DLatchDisplay", () => {
 `,
   )
   dLd.Q = false
+  it.is(
+    dLd.txt(),
+    `\
+        DLatch           
+        _______          
+  D -1--|     |--0- Q    
+        |     |          
+ EN -1--|     |          
+        |     |          
+        |     |o-1- NOTQ 
+        -------          \
+`,
+  )
+})
+describe("DLatchDisplay joining", () => {
+  const dL = new DLatch()
+  const dLd = new DLatchDisplay()
+
+  dLd.dlatch = dL
+  dL.EN = true
+  dL.D = true
   it.is(
     dLd.txt(),
     `\
