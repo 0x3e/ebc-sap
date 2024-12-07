@@ -4,6 +4,8 @@
 *                        B ----|??/                                        *
 \*                                                                        */
 
+import * as h from "../src/helpers.js"
+
 export class Gate {
   #A = undefined
   #B = undefined
@@ -57,9 +59,11 @@ export class Gate {
 
   set(a, b) {
     if (this.#A === a && this.#B === b) return this.#Q
-    this.#A = a
-    this.#B = b
-    this.process()
+    const rnd = h.randomBit()
+    // prevent a bias by randomizing which is set first
+    if(rnd) this.A = a
+    this.B = b
+    if(!rnd) this.A = a
     return this.#Q
   }
 

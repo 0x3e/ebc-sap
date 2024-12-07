@@ -70,23 +70,28 @@ function ttester() {
   }
   const matches = (desc, fun, expectedResult) =>
     test(desc, fun, expectedResult)
+  const is = matches
   const isTrue = (desc, fun) => test(desc, fun, true)
   const isFalse = (desc, fun) => test(desc, fun, false)
   const isTruthy = (desc, fun) => test(desc, fun, "truthy")
   const isFalsy = (desc, fun) => test(desc, fun, "falsy")
   const isNull = (desc, fun) => test(desc, fun, null)
   const isUndefined = (desc, fun) => test(desc, fun, "undefined")
+  const isType = (desc, fun, expectedResult) =>
+    test(desc, () => typeof fun(), expectedResult)
   const matchObject = (desc, fun, expectedResult) =>
     test(desc, fun, expectedResult)
   const output = desc => console.log(`ok - ${desc}`)
   return {
     matches,
+    is,
     isTrue,
     isFalse,
     isTruthy,
     isFalsy,
     isNull,
     isUndefined,
+    isType,
     matchObject,
     output,
   }

@@ -1,5 +1,8 @@
-const t = await import("./ttester.js")
+import {test as describe} from "uvu"
+import * as it from "uvu/assert"
 const {Clock} = await import("../src/clock.js")
+import * as h from "../src/helpers.js"
+
 const c = {}
 
 //t.isTruthy('create', () => (c = Clock()))
