@@ -16,7 +16,6 @@ export class DLatch {
   #SRLATCH = new SRLatch()
   #INV = new Gates.NOT()
   #AND = [new Gates.AND(), new Gates.AND()]
-  #sendsQ = []
   static type = "DLatch"
 
   constructor() {
@@ -26,15 +25,12 @@ export class DLatch {
   }
 
   sendQ(fun) {
-    this.#sendsQ.push(fun)
+    this.SRLATCH.sendQ(fun)
   }
 
   process() {
     this.#Q = this.#SRLATCH.Q
     this.#NOTQ = this.#SRLATCH.NOTQ
-    for (const fun of this.#sendsQ) {
-      fun(this.#Q)
-    }
   }
 
   setD(d) {

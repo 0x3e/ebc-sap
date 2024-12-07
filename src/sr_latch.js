@@ -5,7 +5,6 @@ export class SRLatch {
   #Q = undefined
   #NOTQ = undefined
   #NOR = [new Gates.NOR(), new Gates.NOR()]
-  #sendsQ = []
   static type = "SRLatch"
 
   constructor() {
@@ -14,15 +13,12 @@ export class SRLatch {
   }
 
   sendQ(fun) {
-    this.#sendsQ.push(fun)
+    this.#NOR[0].sendQ(fun)
   }
 
   process() {
     this.#Q = this.#NOR[0].Q
     this.#NOTQ = this.#NOR[1].Q
-    for (const fun of this.#sendsQ) {
-      fun(this.#Q)
-    }
   }
 
   setS(s) {
