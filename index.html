@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <head>
 <script type='module'>
-import * as Gates from './src/gates.js'
+import * as ebc_sap from "./src/index.mjs"
 
+window.ebc_sap = ebc_sap
 
 console.log("init")
 </script>
+<style>
+body {
+  font-family: "Courier New", monospace;
+  white-space: pre;
+}
+</style>
 </head>
 <body>
+  <div id=dlatch></div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 import {test as describe} from "uvu"
 import * as it from "uvu/assert"
-import {DLatchDisplay} from "../src/d_latch.display.js"
+import {DLatchDisplay} from "../src/d_latch_display.js"
 import * as h from "../src/helpers.js"
 
 //NOTbiome-ignore format: text alignment
@@ -9,60 +9,70 @@ describe("DLatchDisplay", () => {
   it.is(
     dLd.txt(),
     `\
-       DLatch          
-        _____          
-  D -?--|   |--?- Q    
-        |   |          
- EN -?--|   |--?- NOTQ 
-        -----          \
+        DLatch           
+        _______          
+  D -?--|     |--?- Q    
+        |     |          
+ EN -?--|     |          
+        |     |          
+        |     |o-?- NOTQ 
+        -------          \
 `,
   )
   dLd.D = true
   it.is(
     dLd.txt(),
     `\
-       DLatch          
-        _____          
-  D -1--|   |--?- Q    
-        |   |          
- EN -?--|   |--?- NOTQ 
-        -----          \
+        DLatch           
+        _______          
+  D -1--|     |--?- Q    
+        |     |          
+ EN -?--|     |          
+        |     |          
+        |     |o-?- NOTQ 
+        -------          \
 `,
   )
   dLd.EN = true
   it.is(
     dLd.txt(),
     `\
-       DLatch          
-        _____          
-  D -1--|   |--?- Q    
-        |   |          
- EN -1--|   |--?- NOTQ 
-        -----          \
+        DLatch           
+        _______          
+  D -1--|     |--?- Q    
+        |     |          
+ EN -1--|     |          
+        |     |          
+        |     |o-?- NOTQ 
+        -------          \
 `,
   )
   dLd.Q = true
   it.is(
     dLd.txt(),
     `\
-       DLatch          
-        _____          
-  D -1--|   |--1- Q    
-        |   |          
- EN -1--|   |--0- NOTQ 
-        -----          \
+        DLatch           
+        _______          
+  D -1--|     |--1- Q    
+        |     |          
+ EN -1--|     |          
+        |     |          
+        |     |o-0- NOTQ 
+        -------          \
 `,
   )
   dLd.Q = false
   it.is(
     dLd.txt(),
     `\
-       DLatch          
-        _____          
-  D -1--|   |--0- Q    
-        |   |          
- EN -1--|   |--1- NOTQ 
-        -----          \
+        DLatch           
+        _______          
+  D -1--|     |--0- Q    
+        |     |          
+ EN -1--|     |          
+        |     |          
+        |     |o-1- NOTQ 
+        -------          \
 `,
   )
 })
