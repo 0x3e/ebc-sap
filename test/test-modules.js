@@ -1,0 +1,6 @@
+import {test} from "uvu"
+import assert from "uvu/assert"
+import "./gates.test.js"
+import "./sr_latch.test.js"
+import "./d_latch.test.js"
+import "./d_flipflop.test.js"
