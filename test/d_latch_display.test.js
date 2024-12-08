@@ -58,21 +58,21 @@ describe("DLatchDisplay", () => {
         |     |          
  EN -1--|     |          
         |     |          
-        |     |o-0- NOTQ 
+        |     |o-?- NOTQ 
         -------          \
 `,
   )
-  dLd.Q = false
+  dLd.NOTQ = false
   it.is(
     dLd.txt(),
     `\
         DLatch           
         _______          
-  D -1--|     |--0- Q    
+  D -1--|     |--1- Q    
         |     |          
  EN -1--|     |          
         |     |          
-        |     |o-1- NOTQ 
+        |     |o-0- NOTQ 
         -------          \
 `,
   )
@@ -82,18 +82,18 @@ describe("DLatchDisplay joining", () => {
   const dLd = new DLatchDisplay()
 
   dLd.dlatch = dL
-  dL.EN = true
   dL.D = true
+  dL.EN = true
   it.is(
     dLd.txt(),
     `\
         DLatch           
         _______          
-  D -1--|     |--0- Q    
+  D -1--|     |--1- Q    
         |     |          
  EN -1--|     |          
         |     |          
-        |     |o-1- NOTQ 
+        |     |o-0- NOTQ 
         -------          \
 `,
   )

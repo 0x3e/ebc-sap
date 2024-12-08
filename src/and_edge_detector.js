@@ -6,12 +6,17 @@
   *         `-|N )o--'                           *
   *           | /                                *
   \*                                            */
+
 import * as Gates from "./gates.js"
+import {PubSub} from "./pub_sub.js"
+
 export class ANDEdgeDetector {
   #A = undefined
   #Q = undefined
   #INV = new Gates.NOT()
   #AND = new Gates.AND()
+  #pubSub = new PubSub()
+
   static type = "ANDEdgeDetector"
 
   constructor() {
@@ -22,8 +27,13 @@ export class ANDEdgeDetector {
     this.#AND.sendQ(fun)
   }
 
+  sub(fun) {
+    this.#pubSub.sub(fun)
+  }
+
   process() {
     this.#Q = this.#AND.Q
+    this.#pubSub.pub()
   }
 
   setA(a) {

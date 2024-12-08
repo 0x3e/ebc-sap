@@ -1,5 +1,7 @@
 import {ANDEdgeDetector} from "../src/and_edge_detector.js"
 import {DLatch} from "../src/d_latch.js"
+import {PubSub} from "./pub_sub.js"
+
 export class DFlipFlop {
   #D = undefined
   #CLK = undefined
@@ -7,6 +9,8 @@ export class DFlipFlop {
   #NOTQ = undefined
   #DLatch = new DLatch()
   #ANDED = new ANDEdgeDetector()
+  #pubSub = new PubSub()
+
   static type = "DFlipFlop"
 
   constructor() {
@@ -17,9 +21,14 @@ export class DFlipFlop {
     this.#DLatch.sendQ(fun)
   }
 
+  sub(fun) {
+    this.#pubSub.sub(fun)
+  }
+
   process() {
     this.#Q = this.#DLatch.Q
     this.#NOTQ = this.#DLatch.NOTQ
+    this.#pubSub.pub()
   }
 
   setD(d) {

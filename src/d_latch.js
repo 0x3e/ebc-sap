@@ -6,8 +6,10 @@
 *                              -----                                       *
 \*                                                                        */
 
-import {SRLatch} from "../src/sr_latch.js"
 import * as Gates from "./gates.js"
+import {PubSub} from "./pub_sub.js"
+import {SRLatch} from "./sr_latch.js"
+
 export class DLatch {
   #D = undefined
   #EN = undefined
@@ -16,6 +18,8 @@ export class DLatch {
   #SRLATCH = new SRLatch()
   #INV = new Gates.NOT()
   #AND = [new Gates.AND(), new Gates.AND()]
+  #pubSub = new PubSub()
+
   static type = "DLatch"
 
   constructor() {
@@ -28,9 +32,14 @@ export class DLatch {
     this.#SRLATCH.sendQ(fun)
   }
 
+  sub(fun) {
+    this.#pubSub.sub(fun)
+  }
+
   process() {
     this.#Q = this.#SRLATCH.Q
     this.#NOTQ = this.#SRLATCH.NOTQ
+    this.#pubSub.pub()
   }
 
   setD(d) {

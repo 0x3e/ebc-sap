@@ -1,10 +1,13 @@
 import * as Gates from "./gates.js"
+import {PubSub} from "./pub_sub.js"
+
 export class SRLatch {
   #R = undefined
   #S = undefined
   #Q = undefined
   #NOTQ = undefined
   #NOR = [new Gates.NOR(), new Gates.NOR()]
+  #pubSub = new PubSub()
   static type = "SRLatch"
 
   constructor() {
@@ -16,9 +19,14 @@ export class SRLatch {
     this.#NOR[0].sendQ(fun)
   }
 
+  sub(fun) {
+    this.#pubSub.sub(fun)
+  }
+
   process() {
     this.#Q = this.#NOR[0].Q
     this.#NOTQ = this.#NOR[1].Q
+    this.#pubSub.pub()
   }
 
   setS(s) {

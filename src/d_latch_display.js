@@ -19,10 +19,11 @@ export class DLatchDisplay {
 
   set dlatch(dlatch) {
     this.#dlatch = dlatch
-    dlatch.sendQ(Q => this.recieveQ(Q))
+    dlatch.sub(() => this.update("dlatch"))
+    this.update("dlatch")
   }
 
-  recieveQ(q) {
+  update() {
     this.asJSON = this.#dlatch.toJSON()
   }
 
@@ -60,12 +61,15 @@ export class DLatchDisplay {
 
   set Q(q) {
     this.#q = q ? 1 : 0
-    this.#not_q = q ? 0 : 1
+  }
+  set NOTQ(q) {
+    this.#not_q = q ? 1 : 0
   }
 
   set asJSON(json) {
     this.D = json.D
     this.EN = json.EN
     this.Q = json.Q
+    this.NOTQ = json.NOTQ
   }
 }

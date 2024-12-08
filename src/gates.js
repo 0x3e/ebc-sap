@@ -4,13 +4,16 @@
 *                        B ----|??/                                        *
 \*                                                                        */
 
-import * as h from "../src/helpers.js"
+import * as h from "./helpers.js"
+import {PubSub} from "./pub_sub.js"
 
 export class Gate {
   #A = undefined
   #B = undefined
   #Q = undefined
   #sendsQ = []
+  #pubSub = new PubSub()
+
   static type = "Gate"
 
   calculateOutput(a, b) {
@@ -23,11 +26,16 @@ export class Gate {
     this.#sendsQ.push(fun)
   }
 
+  sub(fun) {
+    this.#pubSub.sub(fun)
+  }
+
   process() {
     this.#Q = this.calculateOutput(this.#A, this.#B)
     for (const fun of this.#sendsQ) {
       fun(this.#Q)
     }
+    this.#pubSub.pub()
   }
 
   setA(a) {
