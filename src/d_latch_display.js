@@ -14,17 +14,39 @@ export class DLatchDisplay {
   #en = "?"
   #q = "?"
   #not_q = "?"
-  #mode = "txt"
   #dlatch = undefined
+  #dlatch_sub = undefined
+  #containers = new Set()
 
   set dlatch(dlatch) {
+    if (this.#dlatch === dlatch) return
     this.#dlatch = dlatch
-    dlatch.sub(() => this.update("dlatch"))
+    this.#dlatch_sub = dlatch.sub((it = "dlatch") => this.update(it))
     this.update("dlatch")
   }
 
-  update() {
+  update(it) {
     this.asJSON = this.#dlatch.toJSON()
+    for (const con of this.#containers) {
+      con.querySelector(".d").innerHTML = this.#d
+      con.querySelector(".en").innerHTML = this.#en
+      con.querySelector(".q").innerHTML = this.#q
+      con.querySelector(".not_q").innerHTML = this.#not_q
+    }
+  }
+
+  add_container(con) {
+    if (!this.#containers.has(con)) {
+      this.#containers.add(con)
+      con.innerHTML = this.html()
+    }
+  }
+
+  remove_container(con) {
+    if (this.#containers.has(con)) {
+      this.#containers.delete(con)
+      con.innerHTML = ""
+    }
   }
 
   txt() {
@@ -47,23 +69,28 @@ export class DLatchDisplay {
         |     |          
  EN -<span class=en>${this.#en}</span>--|     |          
         |     |          
-        |     |o-<span class=notq>${this.#not_q}</span>- Ǭ 
+        |     |o-<span class=not_q>${this.#not_q}</span>- Ǭ 
         -------          </div>`
   }
 
   set D(d) {
+    if (d === undefined) return
     this.#d = d ? 1 : 0
   }
 
   set EN(en) {
+    if (en === undefined) return
     this.#en = en ? 1 : 0
   }
 
   set Q(q) {
+    if (q === undefined) return
     this.#q = q ? 1 : 0
   }
-  set NOTQ(q) {
-    this.#not_q = q ? 1 : 0
+
+  set NOTQ(notq) {
+    if (notq === undefined) return
+    this.#not_q = notq ? 1 : 0
   }
 
   set asJSON(json) {

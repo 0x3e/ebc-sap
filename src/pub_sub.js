@@ -12,6 +12,7 @@ export class PubSub {
   }
 
   pub() {
+    if (this.#subList.size === 0) return
     for (const sub of this.#subList) {
       const fun = sub.deref()
       fun ? fun() : this.#subList.delete(sub)

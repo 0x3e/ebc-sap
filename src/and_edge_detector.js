@@ -28,7 +28,7 @@ export class ANDEdgeDetector {
   }
 
   sub(fun) {
-    this.#pubSub.sub(fun)
+    return this.#pubSub.sub(fun)
   }
 
   process() {
