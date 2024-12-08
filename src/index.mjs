@@ -4,5 +4,6 @@ import {DLatch} from "./d_latch.js"
 import {DLatchDisplay} from "./d_latch_display.js"
 import * as Gates from "./gates.js"
 import * as h from "./helpers.js"
+import {PubSub} from "./pub_sub.js"
 import {SRLatch} from "./sr_latch.js"
 export {h, Gates, SRLatch, DLatch, DFlipFlop, DLatchDisplay}
