@@ -1,25 +1,24 @@
-import {test as describe} from "uvu"
-import * as it from "uvu/assert"
+import {describe, eq, it, ok} from "../lib/test.mjs"
 import {ANDEdgeDetector} from "../src/and_edge_detector.js"
 import * as h from "../src/helpers.js"
 
 describe("ANDEdgeDetector", () => {
-  const andED = new ANDEdgeDetector()
+  it("ANDEdgeDetector", () => {
+    const andED = new ANDEdgeDetector()
 
-  andED.setA(h.randomBit())
-  it.is(andED.type, "ANDEdgeDetector")
-  it.instance(andED, ANDEdgeDetector)
-  andED.A = false
-  it.is(andED.toString(), '{"type":"ANDEdgeDetector","A":false,"Q":false}')
-  it.type(andED.Q, "boolean")
-  andED.A = false
-  it.is(andED.Q, false)
-  let hit = false
-  andED.sendQ(Q => {
-    if (!hit) hit = Q
+    andED.setA(h.randomBit())
+    eq(andED.type, "ANDEdgeDetector")
+    andED.A = false
+    eq(andED.toString(), '{"type":"ANDEdgeDetector","A":false,"Q":false}')
+    eq(typeof andED.Q, "boolean")
+    andED.A = false
+    eq(andED.Q, false)
+    let hit = false
+    andED.sendQ(Q => {
+      if (!hit) hit = Q
+    })
+    andED.A = true
+    eq(hit, true, "will be hit")
+    eq(andED.Q, false)
   })
-  andED.A = true
-  it.is(hit, true, "will be hit")
-  it.is(andED.Q, false)
 })
-describe.run()

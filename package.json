@@ -2,19 +2,14 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "test": "npx uvu",
+    "test": "node --test \"test/*.js\"",
     "server": "npx http-server",
-    "bio": "npx @biomejs/biome check",
-    "pack": "npx webpack"
+    "bio": "npx @biomejs/biome check"
   },
   "imports": {
     "#src/*.js": "./src/*.js"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "uvu": "^0.5.6",
-    "webpack": "^5.97.1",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0"
+    "@biomejs/biome": "1.9.4"
   }
 }

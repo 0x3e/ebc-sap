@@ -1,15 +1,15 @@
-import {test as describe} from "uvu"
-import * as it from "uvu/assert"
+import {describe, eq, it, ok} from "../lib/test.mjs"
 import {DLatch} from "../src/d_latch.js"
 import {DLatchDisplay} from "../src/d_latch_display.js"
 import * as h from "../src/helpers.js"
 
 //NOTbiome-ignore format: text alignment
 describe("DLatchDisplay", () => {
-  const dLd = new DLatchDisplay()
-  it.is(
-    dLd.txt(),
-    `\
+  it("txt display", () => {
+    const dLd = new DLatchDisplay()
+    eq(
+      dLd.txt(),
+      `\
         DLatch           
         _______          
   D -?--|     |--?- Q    
@@ -19,11 +19,11 @@ describe("DLatchDisplay", () => {
         |     |o-?- NOTQ 
         -------          \
 `,
-  )
-  dLd.D = true
-  it.is(
-    dLd.txt(),
-    `\
+    )
+    dLd.D = true
+    eq(
+      dLd.txt(),
+      `\
         DLatch           
         _______          
   D -1--|     |--?- Q    
@@ -33,11 +33,11 @@ describe("DLatchDisplay", () => {
         |     |o-?- NOTQ 
         -------          \
 `,
-  )
-  dLd.EN = true
-  it.is(
-    dLd.txt(),
-    `\
+    )
+    dLd.EN = true
+    eq(
+      dLd.txt(),
+      `\
         DLatch           
         _______          
   D -1--|     |--?- Q    
@@ -47,11 +47,11 @@ describe("DLatchDisplay", () => {
         |     |o-?- NOTQ 
         -------          \
 `,
-  )
-  dLd.Q = true
-  it.is(
-    dLd.txt(),
-    `\
+    )
+    dLd.Q = true
+    eq(
+      dLd.txt(),
+      `\
         DLatch           
         _______          
   D -1--|     |--1- Q    
@@ -61,11 +61,11 @@ describe("DLatchDisplay", () => {
         |     |o-?- NOTQ 
         -------          \
 `,
-  )
-  dLd.NOTQ = false
-  it.is(
-    dLd.txt(),
-    `\
+    )
+    dLd.NOTQ = false
+    eq(
+      dLd.txt(),
+      `\
         DLatch           
         _______          
   D -1--|     |--1- Q    
@@ -75,18 +75,18 @@ describe("DLatchDisplay", () => {
         |     |o-0- NOTQ 
         -------          \
 `,
-  )
-})
-describe("DLatchDisplay joining", () => {
-  const dL = new DLatch()
-  const dLd = new DLatchDisplay()
+    )
+  })
+  it("joins", () => {
+    const dL = new DLatch()
+    const dLd = new DLatchDisplay()
 
-  dLd.dlatch = dL
-  dL.D = true
-  dL.EN = true
-  it.is(
-    dLd.txt(),
-    `\
+    dLd.dlatch = dL
+    dL.D = true
+    dL.EN = true
+    eq(
+      dLd.txt(),
+      `\
         DLatch           
         _______          
   D -1--|     |--1- Q    
@@ -96,6 +96,6 @@ describe("DLatchDisplay joining", () => {
         |     |o-0- NOTQ 
         -------          \
 `,
-  )
+    )
+  })
 })
-describe.run()

@@ -1,5 +1,4 @@
-import {test as describe} from "uvu"
-import * as it from "uvu/assert"
+import {describe, eq, it, ok} from "../lib/test.mjs"
 import {DFlipFlop} from "../src/d_flipflop.js"
 import * as h from "../src/helpers.js"
 
@@ -22,37 +21,35 @@ describe("DFlipFlop", () => {
   dFF.D = false
   dFF.CLK = false
   dFF.CLK = true
-  it.instance(dFF, DFlipFlop)
-  it.is(dFF.type, "DFlipFlop")
-  it.is(
+  eq(dFF.type, "DFlipFlop")
+  eq(
     dFF.toString(),
     '{"type":"DFlipFlop","D":false,"CLK":true,"Q":false,"NOTQ":true}',
   )
-  it.type(dFF.Q, "boolean")
+  eq(typeof dFF.Q, "boolean")
   dFF.D = true
   dFF.CLK = false
   dFF.CLK = true
-  it.is(dFF.Q, true)
+  eq(dFF.Q, true)
   dFF.CLK = false
   dFF.CLK = true
-  it.is(dFF.Q, true)
+  eq(dFF.Q, true)
   dFF.D = false
-  it.is(dFF.Q, true)
+  eq(dFF.Q, true)
   dFF.D = true
-  it.is(dFF.Q, true)
+  eq(dFF.Q, true)
   dFF.D = false
   dFF.CLK = false
   dFF.CLK = true
-  it.is(dFF.Q, false)
+  eq(dFF.Q, false)
   dFF.CLK = false
-  it.is(dFF.Q, false)
+  eq(dFF.Q, false)
   dFF.D = true
-  it.is(dFF.Q, false)
+  eq(dFF.Q, false)
   dFF.CLK = true
-  it.is(dFF.Q, true)
+  eq(dFF.Q, true)
   dFF.D = false
   dFF.CLK = false
   dFF.CLK = true
-  it.is(dFF.Q, false)
+  eq(dFF.Q, false)
 })
-describe.run()
