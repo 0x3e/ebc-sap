@@ -63,14 +63,14 @@ export class DLatchDisplay {
 
   html() {
     return `\
-<div class=dlatch>        DLatch           
-        _______          
-  D -<span class=d>${this.#d}</span>--|     |--<span class=q>${this.#q}</span>- Q    
-        |     |          
- EN -<span class=en>${this.#en}</span>--|     |          
-        |     |          
+<div class=dlatch>        DLatch        
+        _______       
+  D -<span class=d>${this.#d}</span>--|     |--<span class=q>${this.#q}</span>- Q 
+        |     |       
+ EN -<span class=en>${this.#en}</span>--|     |       
+        |     |       
         |     |o-<span class=not_q>${this.#not_q}</span>- Ǭ 
-        -------          </div>`
+        -------       </div>`
   }
 
   set D(d) {
