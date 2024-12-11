@@ -22,7 +22,7 @@ describe("Gate", () => {
     eq(buffer.set(false), false)
   })
   it("Gate.NOT", () => {
-    /*                     *\
+  /*                     *\
   *   |   A   |   Y   |   *
   *   | (0,1) | (0,1) |   *
   *   |   0   |   1   |   *
@@ -37,6 +37,35 @@ describe("Gate", () => {
     eq(typeof not.Q, "boolean")
     eq(not.set(false), true)
     eq(not.set(true), false)
+  })
+  it("Gate.TriState", () => {
+  /*                               *\
+  *   TriState                      *
+  *   |   A   |    B   |    Q   |   *
+  *   | (0,1) |  (0,1) |  (0,1) |   *
+  *   |   0   |    0   |    U   |   *
+  *   |   0   |    1   |    1   |   *
+  *   |   1   |    0   |    U   |   *
+  *   |   1   |    1   |    1   |   *
+  \*                               */
+    const tri = new Gates.TriState()
+
+    tri.set(h.randomBit(), h.randomBit())
+    eq(tri.type, "Gate.TriState")
+    tri.A = false
+    tri.B = false
+    eq(tri.toString(), '{"type":"Gate.TriState","A":false,"B":false}')
+    eq(typeof tri.Q, "undefined")
+    eq(tri.set(false, false), undefined)
+    eq(typeof tri.Q, "undefined")
+    eq(tri.set(false, false), undefined)
+    eq(typeof tri.Q, "undefined")
+    eq(tri.set(false, true), false)
+    eq(typeof tri.Q, "boolean")
+    eq(tri.set(true, false), undefined)
+    eq(typeof tri.Q, "undefined")
+    eq(tri.set(true, true), true)
+    eq(typeof tri.Q, "boolean")
   })
   it("Gate.AND", () => {
     /*                               *\

@@ -109,6 +109,15 @@ export class NOT extends Wire {
   }
 }
 
+export class TriState extends Gate {
+  static type = "Gate.TriState"
+  calculateOutput(a, b) {
+    let out = a
+    if (!b) out = undefined
+    return out
+  }
+}
+
 export class AND extends Gate {
   static type = "Gate.AND"
 
