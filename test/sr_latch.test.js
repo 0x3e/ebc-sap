@@ -1,6 +1,6 @@
 import {describe, eq, it, ok} from "../lib/test.mjs"
-import * as h from "../src/helpers.js"
-import {SRLatch} from "../src/sr_latch.js"
+import * as h from "../src/helpers.mjs"
+import {SRLatch} from "../src/sr_latch.mjs"
 
 describe("SRLatch", () => {
   it("is", () => {

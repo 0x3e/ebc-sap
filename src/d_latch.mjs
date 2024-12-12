@@ -6,9 +6,9 @@
 *                              -----                                       *
 \*                                                                        */
 
-import * as Gates from "./gates.js"
-import {PubSub} from "./pub_sub.js"
-import {SRLatch} from "./sr_latch.js"
+import * as Gates from "./gates.mjs"
+import {PubSub} from "./pub_sub.mjs"
+import {SRLatch} from "./sr_latch.mjs"
 
 export class DLatch {
   #D = undefined

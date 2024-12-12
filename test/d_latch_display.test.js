@@ -1,7 +1,7 @@
 import {describe, eq, it, ok} from "../lib/test.mjs"
-import {DLatch} from "../src/d_latch.js"
-import {DLatchDisplay} from "../src/d_latch_display.js"
-import * as h from "../src/helpers.js"
+import {DLatch} from "../src/d_latch.mjs"
+import {DLatchDisplay} from "../src/d_latch_display.mjs"
+import * as h from "../src/helpers.mjs"
 
 //NOTbiome-ignore format: text alignment
 describe("DLatchDisplay", () => {

@@ -1,5 +1,5 @@
 import {describe, eq, it, ok} from "../lib/test.mjs"
-import {PubSub} from "../src/pub_sub.js"
+import {PubSub} from "../src/pub_sub.mjs"
 
 describe("PubSub", () => {
   const pubSub = new PubSub()

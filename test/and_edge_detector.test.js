@@ -1,6 +1,6 @@
 import {describe, eq, it, ok} from "../lib/test.mjs"
-import {ANDEdgeDetector} from "../src/and_edge_detector.js"
-import * as h from "../src/helpers.js"
+import {ANDEdgeDetector} from "../src/and_edge_detector.mjs"
+import * as h from "../src/helpers.mjs"
 
 describe("ANDEdgeDetector", () => {
   it("ANDEdgeDetector", () => {

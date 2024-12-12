@@ -1,6 +1,6 @@
 import {describe, eq, it, ok} from "../lib/test.mjs"
-import * as Gates from "../src/gates.js"
-import * as h from "../src/helpers.js"
+import * as Gates from "../src/gates.mjs"
+import * as h from "../src/helpers.mjs"
 
 describe("Gate", () => {
   it("Gate.Buffer", () => {

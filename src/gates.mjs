@@ -4,8 +4,8 @@
 *                        B ----|??/                                        *
 \*                                                                        */
 
-import * as h from "./helpers.js"
-import {PubSub} from "./pub_sub.js"
+import * as h from "./helpers.mjs"
+import {PubSub} from "./pub_sub.mjs"
 
 export class Gate {
   #A = undefined

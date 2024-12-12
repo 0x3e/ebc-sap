@@ -7,8 +7,8 @@
   *           | /                                *
   \*                                            */
 
-import * as Gates from "./gates.js"
-import {PubSub} from "./pub_sub.js"
+import * as Gates from "./gates.mjs"
+import {PubSub} from "./pub_sub.mjs"
 
 export class ANDEdgeDetector {
   #A = undefined

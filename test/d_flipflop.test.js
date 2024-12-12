@@ -1,6 +1,6 @@
 import {describe, eq, it, ok} from "../lib/test.mjs"
-import {DFlipFlop} from "../src/d_flipflop.js"
-import * as h from "../src/helpers.js"
+import {DFlipFlop} from "../src/d_flipflop.mjs"
+import * as h from "../src/helpers.mjs"
 
 describe("DFlipFlop", () => {
   /*                               *\

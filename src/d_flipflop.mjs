@@ -1,6 +1,6 @@
-import {ANDEdgeDetector} from "../src/and_edge_detector.js"
-import {DLatch} from "../src/d_latch.js"
-import {PubSub} from "./pub_sub.js"
+import {ANDEdgeDetector} from "./and_edge_detector.mjs"
+import {DLatch} from "./d_latch.mjs"
+import {PubSub} from "./pub_sub.mjs"
 
 export class DFlipFlop {
   #D = undefined
