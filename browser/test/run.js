@@ -1,3 +1,4 @@
+import "./tests/registers.test.js"
 import "./tests/d_flipflop.test.js"
 import "./tests/pub_sub.test.js"
 import "./tests/d_latch.test.js"
