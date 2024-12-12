@@ -1,8 +1,8 @@
-/*                             Gate                                       *\
-*                        A ----|??\   Q                                    *
-*                              ??? )?---                                   *
-*                        B ----|??/                                        *
-\*                                                                        */
+/*                             Gate                                     *\
+*                        A ----|??\   Q                                  *
+*                              ??? )?---                                 *
+*                        B ----|??/                                      *
+\*                                                                      */
 
 import * as h from "./helpers.mjs"
 import {PubSub} from "./pub_sub.mjs"
@@ -32,6 +32,7 @@ export class Gate {
 
   process() {
     this.#Q = this.calculateOutput(this.#A, this.#B)
+    if (this.#Q === undefined) return undefined
     for (const fun of this.#sendsQ) {
       fun(this.#Q)
     }

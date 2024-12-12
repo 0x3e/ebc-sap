@@ -3,7 +3,6 @@ import {DLatch} from "../src/d_latch.mjs"
 import {DLatchDisplay} from "../src/d_latch_display.mjs"
 import * as h from "../src/helpers.mjs"
 
-//NOTbiome-ignore format: text alignment
 describe("DLatchDisplay", () => {
   it("txt display", () => {
     const dLd = new DLatchDisplay()

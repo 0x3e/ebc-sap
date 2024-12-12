@@ -1,10 +1,10 @@
-/*                            DLatch                                      *\
-*                              _____                                       *
-*                        D ----|   |---- Q                                 *
-*                              |   |                                       *
-*                       EN ----|   |o--- NOTQ                              *
-*                              -----                                       *
-\*                                                                        */
+/*                          DLatch                                      *\
+*                            _____                                       *
+*                      D ----|   |---- Q                                 *
+*                            |   |                                       *
+*                     EN ----|   |o--- NOTQ                              *
+*                            -----                                       *
+\*                                                                      */
 
 import * as Gates from "./gates.mjs"
 import {PubSub} from "./pub_sub.mjs"

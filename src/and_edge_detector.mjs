@@ -1,11 +1,11 @@
-/*                                            *\
-  *         ANDEdgeDetector                      *
-  *     A --+----------|&&\                      *
-  *         |          |&& )---- Q               *
-  *         | | \    .-|&&/                      *
-  *         `-|N )o--'                           *
-  *           | /                                *
-  \*                                            */
+/*                                             *\
+ *         ANDEdgeDetector                      *
+ *     A --+----------|&&\                      *
+ *         |          |&& )---- Q               *
+ *         | | \    .-|&&/                      *
+ *         `-|N )o--'                           *
+ *           | /                                *
+ \*                                            */
 
 import * as Gates from "./gates.mjs"
 import {PubSub} from "./pub_sub.mjs"
