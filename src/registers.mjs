@@ -147,10 +147,6 @@ export class EightBitRegister {
     this.setD(d)
   }
 
-  get D() {
-    this.#D
-  }
-
   setLOAD(l) {
     if (this.#LOAD === l) return
     this.#LOAD = l

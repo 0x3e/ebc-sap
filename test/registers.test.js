@@ -53,7 +53,6 @@ describe("Registers", () => {
     eq(register.Q, false)
   })
   it("EightBitRegister", () => {
-
     const eight_bit_r = new EightBitRegister()
     eight_bit_r.LOAD = true
     eight_bit_r.OUT = false

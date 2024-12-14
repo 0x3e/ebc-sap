@@ -22,5 +22,5 @@ export function throwOnNaB(...args) {
 export const bytes = {
   x00: ArrayOf(8, () => false),
   xFF: ArrayOf(8, () => true),
-  xZZ: ArrayOf(8, () => undefined)
+  xZZ: ArrayOf(8, () => undefined),
 }
