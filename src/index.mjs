@@ -7,6 +7,7 @@ import * as h from "./helpers.mjs"
 import {PubSub} from "./pub_sub.mjs"
 import {EightBitRegister, Register} from "./registers.mjs"
 import {SRLatch} from "./sr_latch.mjs"
+import {HalfAdder, FullAdder, EightBitAdder} from "./adders.mjs"
 export {
   h,
   Gates,
@@ -16,4 +17,7 @@ export {
   DLatchDisplay,
   Register,
   EightBitRegister,
+  HalfAdder,
+  FullAdder,
+  EightBitAdder,
 }
