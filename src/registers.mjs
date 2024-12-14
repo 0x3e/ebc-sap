@@ -1,5 +1,6 @@
 import {DFlipFlop} from "./d_flipflop.mjs"
 import * as Gates from "./gates.mjs"
+import * as h from "./helpers.mjs"
 import {PubSub} from "./pub_sub.mjs"
 
 export class Register {
@@ -74,7 +75,108 @@ export class Register {
   }
 
   setCLK(clk) {
-    this.#DFLIPFLOP.CKL = clk
+    this.#DFLIPFLOP.setCLK(clk)
+    if (this.#CLK === clk) return
+    this.#CLK = clk
+    this.process()
+  }
+
+  set CLK(clk) {
+    this.setCLK(clk)
+  }
+
+  get Q() {
+    return this.#Q
+  }
+
+  get type() {
+    return this.constructor.type
+  }
+
+  toJSON() {
+    return {
+      type: this.type,
+      D: this.#D,
+      LOAD: this.#LOAD,
+      OUT: this.#OUT,
+      Q: this.#Q,
+    }
+  }
+
+  toString() {
+    return JSON.stringify(this.toJSON())
+  }
+}
+
+export class EightBitRegister {
+  #D = undefined
+  #LOAD = undefined
+  #OUT = undefined
+  #Q = undefined
+  #CLK = undefined
+  #register = h.ArrayOf(8, () => new Register())
+  #sendsQ = []
+  #pubSub = new PubSub()
+
+  static type = "EightBitRegister"
+
+  sendQ(fun) {
+    this.#sendsQ.push(fun)
+  }
+
+  sub(fun) {
+    return this.#pubSub.sub(fun)
+  }
+
+  process() {
+    this.#Q = this.#register.map(register => register.Q)
+    for (const fun of this.#sendsQ) {
+      fun(this.#Q)
+    }
+    this.#pubSub.pub()
+  }
+
+  setD(d) {
+    if (this.#D === d) return
+    this.#D = d
+    this.#register.forEach((register, i) => register.setD(d[i]))
+    this.process()
+  }
+
+  set D(d) {
+    this.setD(d)
+  }
+
+  get D() {
+    this.#D
+  }
+
+  setLOAD(l) {
+    if (this.#LOAD === l) return
+    this.#LOAD = l
+    this.#register.forEach((register, i) => register.setLOAD(l))
+    this.process()
+  }
+
+  set LOAD(l) {
+    this.setLOAD(l)
+  }
+
+  setOUT(o) {
+    if (this.#OUT === o) return
+    this.#OUT = o
+    this.#register.forEach((register, i) => register.setOUT(o))
+    this.process()
+  }
+
+  set OUT(o) {
+    this.setOUT(o)
+  }
+
+  setCLK(clk) {
+    this.#register.forEach((register, i) => register.setCLK(clk))
+    if (this.#CLK === clk) return
+    this.#CLK = clk
     this.process()
   }
 

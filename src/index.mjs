@@ -5,6 +5,6 @@ import {DLatchDisplay} from "./d_latch_display.mjs"
 import * as Gates from "./gates.mjs"
 import * as h from "./helpers.mjs"
 import {PubSub} from "./pub_sub.mjs"
-import {Register} from "./registers.mjs"
+import {Register, EightBitRegister} from "./registers.mjs"
 import {SRLatch} from "./sr_latch.mjs"
-export {h, Gates, SRLatch, DLatch, DFlipFlop, DLatchDisplay, Register}
+export {h, Gates, SRLatch, DLatch, DFlipFlop, DLatchDisplay, Register, EightBitRegister}
