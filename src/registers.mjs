@@ -115,6 +115,7 @@ export class EightBitRegister {
   #Q = undefined
   #CLK = undefined
   #register = h.ArrayOf(8, () => new Register())
+
   #sendsQ = []
   #pubSub = new PubSub()
 

@@ -150,3 +150,11 @@ export class NOR extends Gate {
     return !(a || b)
   }
 }
+
+export class XOR extends Gate {
+  static type = "Gate.XOR"
+
+  calculateOutput(a, b) {
+    return (a || b) && !(a && b)
+  }
+}
