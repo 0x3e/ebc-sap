@@ -3,7 +3,7 @@ import * as h from "../src/helpers.mjs"
 import {SRLatch} from "../src/sr_latch.mjs"
 
 describe("SRLatch", () => {
-  it("is", () => {
+  it("SRLatch", () => {
     /*                               *\
     *   |   S   |    R   |    Q   |   *
     *   | (0,1) |  (0,1) |  (0,1) |   *

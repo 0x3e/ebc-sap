@@ -1,5 +1,5 @@
 import {describe, eq, it, ok} from "../lib/test.mjs"
-import {EigthBitAdder, FullAdder, HalfAdder} from "../src/adders.mjs"
+import {EightBitAdder, FullAdder, HalfAdder} from "../src/adders.mjs"
 import * as h from "../src/helpers.mjs"
 
 describe("Adders", () => {
@@ -55,29 +55,29 @@ describe("Adders", () => {
     eq(full_adder.SUM, true)
     eq(full_adder.CARRY, true)
   })
-  it("EigthBitAdder", () => {
-    const eight_bit_adder = new EigthBitAdder()
+  it("EightBitAdder", () => {
+    const eight_bit_adder = new EightBitAdder()
 
     eight_bit_adder.A = h.bytes.x00
     eight_bit_adder.B = h.bytes.x00
     eight_bit_adder.C = false
-    eq(eight_bit_adder.type, "EigthBitAdder")
+    eq(eight_bit_adder.type, "EightBitAdder")
     eq(
       eight_bit_adder.toString(),
-      '{"type":"EigthBitAdder","A":[false,false,false,false,false,false,false,false],"B":[false,false,false,false,false,false,false,false],"C":false,"SUM":[false,false,false,false,false,false,false,false],"CARRY":false}',
+      '{"type":"EightBitAdder","A":[false,false,false,false,false,false,false,false],"B":[false,false,false,false,false,false,false,false],"C":false,"SUM":[false,false,false,false,false,false,false,false],"CARRY":false}',
     )
     eight_bit_adder.A = h.bytes.x01
     eight_bit_adder.B = h.bytes.x00
     eight_bit_adder.C = false
     eq(
       eight_bit_adder.toString(),
-      '{"type":"EigthBitAdder","A":[true,false,false,false,false,false,false,false],"B":[false,false,false,false,false,false,false,false],"C":false,"SUM":[true,false,false,false,false,false,false,false],"CARRY":false}',
+      '{"type":"EightBitAdder","A":[true,false,false,false,false,false,false,false],"B":[false,false,false,false,false,false,false,false],"C":false,"SUM":[true,false,false,false,false,false,false,false],"CARRY":false}',
     )
     eight_bit_adder.A = h.bytes.x01
     eight_bit_adder.B = h.bytes.x01
     eq(
       eight_bit_adder.toString(),
-      '{"type":"EigthBitAdder","A":[true,false,false,false,false,false,false,false],"B":[true,false,false,false,false,false,false,false],"C":false,"SUM":[false,true,false,false,false,false,false,false],"CARRY":false}',
+      '{"type":"EightBitAdder","A":[true,false,false,false,false,false,false,false],"B":[true,false,false,false,false,false,false,false],"C":false,"SUM":[false,true,false,false,false,false,false,false],"CARRY":false}',
     )
     eq(
       eight_bit_adder.SUM.toString(),

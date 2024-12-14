@@ -183,7 +183,7 @@ export class FullAdder {
   }
 }
 
-export class EigthBitAdder {
+export class EightBitAdder {
   #A = undefined
   #B = undefined
   #C = undefined
@@ -198,7 +198,7 @@ export class EigthBitAdder {
 
   #pubSub = new PubSub()
 
-  static type = "EigthBitAdder"
+  static type = "EightBitAdder"
 
   constructor() {
     this.#adder.forEach((adder, i) => {
