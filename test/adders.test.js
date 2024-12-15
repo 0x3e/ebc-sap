@@ -71,17 +71,28 @@ describe("Adders", () => {
     eight_bit_adder.C = false
     eq(
       eight_bit_adder.toString(),
-      '{"type":"EightBitAdder","A":[true,false,false,false,false,false,false,false],"B":[false,false,false,false,false,false,false,false],"C":false,"SUM":[true,false,false,false,false,false,false,false],"CARRY":false}',
+      '{"type":"EightBitAdder","A":[false,false,false,false,false,false,false,true],"B":[false,false,false,false,false,false,false,false],"C":false,"SUM":[false,false,false,false,false,false,false,true],"CARRY":false}',
     )
     eight_bit_adder.A = h.bytes.x01
     eight_bit_adder.B = h.bytes.x01
     eq(
       eight_bit_adder.toString(),
-      '{"type":"EightBitAdder","A":[true,false,false,false,false,false,false,false],"B":[true,false,false,false,false,false,false,false],"C":false,"SUM":[false,true,false,false,false,false,false,false],"CARRY":false}',
+      '{"type":"EightBitAdder","A":[false,false,false,false,false,false,false,true],"B":[false,false,false,false,false,false,false,true],"C":false,"SUM":[false,false,false,false,false,false,true,false],"CARRY":false}',
     )
     eq(
       eight_bit_adder.SUM.toString(),
-      [false, true, false, false, false, false, false, false].toString(),
+      [false, false, false, false, false, false, true, false].toString(),
+    )
+    eight_bit_adder.A = h.bytes.x0F
+    eight_bit_adder.B = h.bytes.x0F
+    eq(
+      eight_bit_adder.SUM.toString(),
+      [false, false, false, true, true, true, true, false].toString(),
+    )
+    eight_bit_adder.B = h.bytes.x01
+    eq(
+      eight_bit_adder.SUM.toString(),
+      [false, false, false, true, false, false, false, false].toString(),
     )
   })
 })
