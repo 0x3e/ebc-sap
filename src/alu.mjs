@@ -1,6 +1,6 @@
 import {EightBitAdder} from "./adders.mjs"
-import * as h from "./helpers.mjs"
 import * as Gates from "./gates.mjs"
+import * as h from "./helpers.mjs"
 import {PubSub} from "./pub_sub.mjs"
 
 export class ALU {
@@ -21,10 +21,9 @@ export class ALU {
 
   static type = "ALU"
 
-  constructor(){
-    this.#adder.sendSUM((SUM) => {
-      this.#TRISTATE.forEach( (t, i) => t.setA(SUM[i])
-      )
+  constructor() {
+    this.#adder.sendSUM(SUM => {
+      for (const [i, t] of this.#TRISTATE.entries()) t.setA(SUM[i])
     })
   }
 
@@ -58,7 +57,7 @@ export class ALU {
   setB(b) {
     if (this.#B === b) return
     this.#B = b
-    this.#B.forEach( (a,i) => this.#XOR[i].setA(a))
+    for (const [i, bit] of b.entries()) this.#XOR[i].setA(bit)
     this.process()
   }
 
@@ -69,7 +68,7 @@ export class ALU {
   setSU(su) {
     if (this.#SU === su) return
     this.#SU = su
-    this.#XOR.forEach( xor => xor.setB(su))
+    for (const xor of this.#XOR) xor.setB(su)
     this.#adder.C = su
     this.process()
   }
@@ -81,7 +80,7 @@ export class ALU {
   setEU(eu) {
     if (this.#EU === eu) return
     this.#EU = eu
-    this.#TRISTATE.forEach( t => t.setB(eu))
+    for (const t of this.#TRISTATE) t.setB(eu)
     this.process()
   }
 
