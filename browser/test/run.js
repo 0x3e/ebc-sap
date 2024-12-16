@@ -8,6 +8,7 @@ import "./tests/d_latch_display.test.js"
 import "./tests/registers.test.js"
 import "./tests/adders.test.js"
 import "./tests/alu.test.js"
+import "./tests/bus.test.js"
 
 mocha.checkLeaks()
 mocha.run((m) => {

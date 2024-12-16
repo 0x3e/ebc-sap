@@ -24,6 +24,7 @@ export const nibbles = {
   x1: ArrayOf(3, () => false).concat([true]),
   xF: ArrayOf(4, () => true),
   xZ: ArrayOf(4, () => undefined),
+  xN: ArrayOf(4, () => null),
 }
 
 export const bytes = {
@@ -35,4 +36,5 @@ export const bytes = {
   xF1: nibbles.x1.concat(nibbles.xF),
   xFF: ArrayOf(8, () => true),
   xZZ: ArrayOf(8, () => undefined),
+  xNN: ArrayOf(8, () => null),
 }

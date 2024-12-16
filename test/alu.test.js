@@ -1,4 +1,4 @@
-import {describe, eq, it, ok} from "../lib/test.mjs"
+import {dEq, describe, eq, it, ok} from "../lib/test.mjs"
 import {ALU} from "../src/alu.mjs"
 import * as h from "../src/helpers.mjs"
 
@@ -10,19 +10,17 @@ describe("ALU", () => {
     alu.SU = false
     alu.EU = false
     eq(alu.type, "ALU")
-    eq(
-      alu.toString(),
-      '{"type":"ALU","A":[false,false,false,false,false,false,false,false],"B":[false,false,false,false,false,false,false,false],"SUM":[null,null,null,null,null,null,null,null],"SU":false,"EU":false}',
-    )
+    dEq(alu.toJSON(), {
+      type: "ALU",
+      A: h.bytes.x00,
+      B: h.bytes.x00,
+      SUM: h.bytes.xZZ,
+      SU: false,
+      EU: false,
+    })
     alu.EU = true
-    eq(
-      alu.SUM.toString(),
-      [false, false, false, false, false, false, false, false].toString(),
-    )
+    dEq(alu.SUM, [false, false, false, false, false, false, false, false])
     alu.EU = false
-    eq(
-      alu.SUM.toString(),
-      [null, null, null, null, null, null, null, null].toString(),
-    )
+    dEq(alu.SUM, h.bytes.xZZ)
   })
 })
