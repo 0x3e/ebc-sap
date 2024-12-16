@@ -192,6 +192,7 @@ export class EightBitAdder {
   #CARRY = undefined
 
   #adder = h.ArrayOf(8, () => new FullAdder())
+  #j = 7
 
   #sendsSUM = []
   #sendsCARRY = []
@@ -201,10 +202,16 @@ export class EightBitAdder {
   static type = "EightBitAdder"
 
   constructor() {
-    this.#adder.forEach((adder, i) => {
-      if (!this.#adder[i + 1]) return
-      this.#adder[i].sendCARRY(CARRY => this.#adder[i + 1].setC(CARRY))
+    this.reverse_adders(i => {
+      if (i > 0)
+        this.#adder[i].sendCARRY(CARRY => this.#adder[i - 1].setC(CARRY))
     })
+  }
+
+  reverse_adders(fun) {
+    for (let i = this.#j; i >= 0; i--) {
+      fun(i)
+    }
   }
 
   sendSUM(fun) {
@@ -221,7 +228,7 @@ export class EightBitAdder {
 
   process() {
     this.#SUM = this.#adder.map(register => register.SUM)
-    this.#CARRY = this.#adder[this.#adder.length - 1].CARRY
+    this.#CARRY = this.#adder[0].CARRY
     for (const fun of this.#sendsSUM) {
       fun(this.#SUM)
     }
@@ -234,7 +241,7 @@ export class EightBitAdder {
   setA(a) {
     if (this.#A === a) return
     this.#A = a
-    this.#adder.forEach((adder, i) => adder.setA(a[i]))
+    this.reverse_adders(i => this.#adder[i].setA(a[i]))
     this.process()
   }
 
@@ -245,7 +252,7 @@ export class EightBitAdder {
   setB(b) {
     if (this.#B === b) return
     this.#B = b
-    this.#adder.forEach((adder, i) => adder.setB(b[i]))
+    this.reverse_adders(i => this.#adder[i].setB(b[i]))
     this.process()
   }
 
@@ -256,7 +263,7 @@ export class EightBitAdder {
   setC(c) {
     if (this.#C === c) return
     this.#C = c
-    this.#adder[0].C = c
+    this.#adder[this.#j].C = c
     this.process()
   }
 
