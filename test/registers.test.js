@@ -1,4 +1,4 @@
-import {describe, eq, it, ok} from "../lib/test.mjs"
+import {describe, eq, dEq, it, ok} from "../lib/test.mjs"
 import * as h from "../src/helpers.mjs"
 import {EightBitRegister, Register} from "../src/registers.mjs"
 
@@ -30,25 +30,25 @@ describe("Registers", () => {
     register.D = true
     register.CLK = false
     register.CLK = true
-    eq(
-      register.toString(),
-      '{"type":"Register","D":true,"LOAD":true,"OUT":false}',
+    dEq(
+      register.toJSON(),
+      {"type":"Register","D":true,"LOAD":true,"OUT":false, "Q": undefined},
     )
     eq(register.Q, undefined)
     register.OUT = true
     register.CLK = false
     register.CLK = true
-    eq(
-      register.toString(),
-      '{"type":"Register","D":true,"LOAD":true,"OUT":true,"Q":true}',
+    dEq(
+      register.toJSON(),
+      {"type":"Register","D":true,"LOAD":true,"OUT":true,"Q":true},
     )
     eq(register.Q, true)
     register.D = false
     register.CLK = false
     register.CLK = true
-    eq(
-      register.toString(),
-      '{"type":"Register","D":false,"LOAD":true,"OUT":true,"Q":false}',
+    dEq(
+      register.toJSON(),
+      {"type":"Register","D":false,"LOAD":true,"OUT":true,"Q":false},
     )
     eq(register.Q, false)
   })
