@@ -9,6 +9,8 @@ import "./tests/registers.test.js"
 import "./tests/adders.test.js"
 import "./tests/alu.test.js"
 import "./tests/bus.test.js"
+import "./tests/rams.test.js"
+import "./tests/rams_display.test.js"
 
 mocha.checkLeaks()
 mocha.run((m) => {

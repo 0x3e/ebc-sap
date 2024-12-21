@@ -151,7 +151,7 @@ export class EightBitRegister {
   setLOAD(l) {
     if (this.#LOAD === l) return
     this.#LOAD = l
-    this.#register.forEach((register, i) => register.setLOAD(l))
+    for (const reg of this.#register) reg.setLOAD(l)
     this.process()
   }
 
@@ -162,7 +162,7 @@ export class EightBitRegister {
   setOUT(o) {
     if (this.#OUT === o) return
     this.#OUT = o
-    this.#register.forEach((register, i) => register.setOUT(o))
+    for (const reg of this.#register) reg.setOUT(o)
     this.process()
   }
 
@@ -171,7 +171,7 @@ export class EightBitRegister {
   }
 
   setCLK(clk) {
-    this.#register.forEach((register, i) => register.setCLK(clk))
+    for (const reg of this.#register) reg.setCLK(clk)
     if (this.#CLK === clk) return
     this.#CLK = clk
     this.process()

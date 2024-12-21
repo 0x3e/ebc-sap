@@ -19,6 +19,22 @@ export function throwOnNaB(...args) {
     if (typeof bit !== "boolean") throw new Error("NaB")
   }
 }
+
+export function bitsToInt(bits) {
+  if (!isBits(bits)) return undefined
+  let out = 0
+  for (const i in bits) {
+    const ri = bits.length - +i - 1
+    out += (bits[ri] ? 1 : 0) << +i
+  }
+
+  return out
+}
+
+export function bitsToHex(bits) {
+  return bitsToInt(bits).toString(16).toUpperCase()
+}
+
 export const nibbles = {
   x0: ArrayOf(4, () => false),
   x1: ArrayOf(3, () => false).concat([true]),
@@ -33,6 +49,7 @@ export const bytes = {
   x0F: nibbles.x0.concat(nibbles.xF),
   x11: nibbles.x1.concat(nibbles.x1),
   x1F: nibbles.x1.concat(nibbles.xF),
+  xF0: nibbles.xF.concat(nibbles.x0),
   xF1: nibbles.x1.concat(nibbles.xF),
   xFF: ArrayOf(8, () => true),
   xZZ: ArrayOf(8, () => undefined),

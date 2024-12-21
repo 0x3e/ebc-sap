@@ -28,10 +28,10 @@ export class DLatchDisplay {
   update(it) {
     this.asJSON = this.#dlatch.toJSON()
     for (const con of this.#containers) {
-      con.querySelector(".d").innerHTML = this.#d
-      con.querySelector(".en").innerHTML = this.#en
-      con.querySelector(".q").innerHTML = this.#q
-      con.querySelector(".not_q").innerHTML = this.#not_q
+      con.querySelector(".d").textContent = this.#d
+      con.querySelector(".en").textContent = this.#en
+      con.querySelector(".q").textContent = this.#q
+      con.querySelector(".not_q").textContent = this.#not_q
     }
   }
 
@@ -65,11 +65,11 @@ export class DLatchDisplay {
     return `\
 <div class=dlatch>        DLatch        
         _______       
-  D -<span class=d>${this.#d}</span>--|     |--<span class=q>${this.#q}</span>- Q 
+  D -<span class=d>?</span>--|     |--<span class=q>?</span>- Q 
         |     |       
- EN -<span class=en>${this.#en}</span>--|     |       
+ EN -<span class=en>?</span>--|     |       
         |     |       
-        |     |o-<span class=not_q>${this.#not_q}</span>- Ǭ 
+        |     |o-<span class=not_q>?</span>- Ǭ 
         -------       </div>`
   }
 
