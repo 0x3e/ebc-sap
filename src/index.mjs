@@ -9,17 +9,19 @@ import * as Gates from "./gates.mjs"
 import * as h from "./helpers.mjs"
 import {PubSub} from "./pub_sub.mjs"
 import * as Rams from "./rams.mjs"
+import * as RamsDisplay from "./rams_display.mjs"
 import {EightBitRegister, Register} from "./registers.mjs"
 import {SRLatch} from "./sr_latch.mjs"
 export {
-  ANDEdgeDetector,
   ALU,
+  ANDEdgeDetector,
   Bus,
   DFlipFlop,
   DLatch,
   DLatchDisplay,
   EightBitAdder,
   EightBitRegister,
+  RamsDisplay,
   FullAdder,
   Gates,
   HalfAdder,

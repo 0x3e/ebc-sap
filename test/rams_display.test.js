@@ -37,7 +37,7 @@ describe("FourBitAddressableDisplay", () => {
           -------         \
 `,
     )
-    fbad.ADDRN = h.nibbles.xF
+    fbad.ADDR = h.nibbles.xF
     eq(
       fbad.txt(),
       `\
@@ -53,7 +53,7 @@ describe("FourBitAddressableDisplay", () => {
           -------         \
 `,
     )
-    fbad.INB = h.bytes.xF0
+    fbad.IN = h.bytes.xF0
     eq(
       fbad.txt(),
       `\

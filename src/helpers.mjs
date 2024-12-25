@@ -11,6 +11,7 @@ export function randomBits(i) {
 }
 
 export function isBits(bits) {
+  if (!Array.isArray(bits)) return false
   return bits.every(bit => typeof bit === "boolean")
 }
 
@@ -22,17 +23,22 @@ export function throwOnNaB(...args) {
 
 export function bitsToInt(bits) {
   if (!isBits(bits)) return undefined
+  const len = bits.length - 1
   let out = 0
-  for (const i in bits) {
-    const ri = bits.length - +i - 1
-    out += (bits[ri] ? 1 : 0) << +i
-  }
-
+  bits.forEach((bit, i) => {
+    out += !!bits[len - i] << +i
+  })
   return out
 }
 
-export function bitsToHex(bits) {
+export function nibbleToHex(bits) {
+  if (!isBits(bits)) return "?"
   return bitsToInt(bits).toString(16).toUpperCase()
+}
+
+export function byteToHex(bits) {
+  if (!isBits(bits)) return "??"
+  return bitsToInt(bits).toString(16).toUpperCase().padStart(2, "0")
 }
 
 export const nibbles = {

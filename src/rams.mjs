@@ -198,11 +198,10 @@ export class FourBitAddressable {
   }
 
   process() {
-    for (const word of this.#word) word.setWR(false)
-    for (const word of this.#word) word.setEN(false)
     if (this.#ADDR) {
-      if (this.#ADDR) this.#word[h.bitsToInt(this.#ADDR)].setWR(this.#WR)
-      if (this.#ADDR) this.#word[h.bitsToInt(this.#ADDR)].setEN(this.#EN)
+      this.#word[h.bitsToInt(this.#ADDR)].setWR(this.#WR)
+      this.#word[h.bitsToInt(this.#ADDR)].setEN(this.#EN)
+      this.#word[h.bitsToInt(this.#ADDR)].setIN(this.#IN)
       this.#OUT = this.#word[h.bitsToInt(this.#ADDR)].OUT
     }
     for (const fun of this.#sendsOUT) fun(this.#OUT)
@@ -231,6 +230,10 @@ export class FourBitAddressable {
 
   setADDR(addr) {
     if (this.#ADDR === addr) return
+    if (this.#ADDR) {
+      this.#word[h.bitsToInt(this.#ADDR)].setWR(false)
+      this.#word[h.bitsToInt(this.#ADDR)].setEN(false)
+    }
     this.#ADDR = addr
     this.process()
   }
@@ -242,7 +245,6 @@ export class FourBitAddressable {
   setIN(d) {
     if (this.#IN === d) return
     this.#IN = d
-    for (const word of this.#word) word.setIN(d)
     this.process()
   }
 
