@@ -22,5 +22,10 @@ describe("ALU", () => {
     dEq(alu.SUM, [false, false, false, false, false, false, false, false])
     alu.EU = false
     dEq(alu.SUM, h.bytes.xZZ)
+    alu.A = h.bytes.x0F
+    alu.B = h.bytes.x01
+    alu.EU = true
+    dEq(alu.SUM, [false, false, false, true, false, false, false, false])
+    alu.EU = false
   })
 })

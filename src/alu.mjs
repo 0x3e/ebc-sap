@@ -36,6 +36,8 @@ export class ALU {
   }
 
   process() {
+    //TODO better wiring of these. Collection class to replace ArrayOf
+    this.#adder.B = this.#XOR.map(xor => xor.Q)
     this.#SUM = this.#TRISTATE.map(t => t.Q)
     for (const fun of this.#sendsSUM) {
       fun(this.#SUM)
