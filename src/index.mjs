@@ -10,7 +10,7 @@ import * as h from "./helpers.mjs"
 import {PubSub} from "./pub_sub.mjs"
 import * as Rams from "./rams.mjs"
 import * as RamsDisplay from "./rams_display.mjs"
-import {EightBitRegister, Register} from "./registers.mjs"
+import {MultiBitRegister, Register} from "./registers.mjs"
 import {SRLatch} from "./sr_latch.mjs"
 export {
   ALU,
@@ -20,7 +20,7 @@ export {
   DLatch,
   DLatchDisplay,
   EightBitAdder,
-  EightBitRegister,
+  MultiBitRegister,
   RamsDisplay,
   FullAdder,
   Gates,

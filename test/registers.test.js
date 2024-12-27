@@ -1,6 +1,6 @@
 import {dEq, describe, eq, it, ok} from "../lib/test.mjs"
 import * as h from "../src/helpers.mjs"
-import {EightBitRegister, Register} from "../src/registers.mjs"
+import {MultiBitRegister, Register} from "../src/registers.mjs"
 
 describe("Registers", () => {
   it("one Register", () => {
@@ -61,17 +61,17 @@ describe("Registers", () => {
     })
     eq(register.Q, false)
   })
-  it("EightBitRegister", () => {
-    const eight_bit_r = new EightBitRegister()
+  it("MultiBitRegister", () => {
+    const eight_bit_r = new MultiBitRegister(8)
     eight_bit_r.LOAD = true
     eight_bit_r.OUT = false
     eight_bit_r.CLK = false
     eight_bit_r.CLK = true
     eight_bit_r.LOAD = false
-    eq(eight_bit_r.type, "EightBitRegister")
+    eq(eight_bit_r.type, "MultiBitRegister")
     eq(
       eight_bit_r.toString(),
-      '{"type":"EightBitRegister","LOAD":false,"OUT":false,"Q":[null,null,null,null,null,null,null,null]}',
+      '{"type":"MultiBitRegister","LOAD":false,"OUT":false,"Q":[null,null,null,null,null,null,null,null]}',
     )
     eight_bit_r.LOAD = true
     eight_bit_r.OUT = true
@@ -80,14 +80,14 @@ describe("Registers", () => {
     eight_bit_r.CLK = true
     eq(
       eight_bit_r.toString(),
-      '{"type":"EightBitRegister","D":[false,false,false,false,false,false,false,false],"LOAD":true,"OUT":true,"Q":[false,false,false,false,false,false,false,false]}',
+      '{"type":"MultiBitRegister","D":[false,false,false,false,false,false,false,false],"LOAD":true,"OUT":true,"Q":[false,false,false,false,false,false,false,false]}',
     )
     eight_bit_r.D = h.bytes.xFF
     eight_bit_r.CLK = false
     eight_bit_r.CLK = true
     eq(
       eight_bit_r.toString(),
-      '{"type":"EightBitRegister","D":[true,true,true,true,true,true,true,true],"LOAD":true,"OUT":true,"Q":[true,true,true,true,true,true,true,true]}',
+      '{"type":"MultiBitRegister","D":[true,true,true,true,true,true,true,true],"LOAD":true,"OUT":true,"Q":[true,true,true,true,true,true,true,true]}',
     )
   })
 })

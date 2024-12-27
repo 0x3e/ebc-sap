@@ -108,19 +108,22 @@ export class Register {
   }
 }
 
-export class EightBitRegister {
+export class MultiBitRegister {
   #D = undefined
   #LOAD = undefined
   #OUT = undefined
   #Q = undefined
   #CLK = undefined
-  #register = h.ArrayOf(8, () => new Register())
+  #register = undefined
 
   #sendsQ = []
   #pubSub = new PubSub()
 
-  static type = "EightBitRegister"
+  static type = "MultiBitRegister"
 
+  constructor(bits) {
+  this.#register = h.ArrayOf(bits, () => new Register())
+  }
   sendQ(fun) {
     this.#sendsQ.push(fun)
   }
