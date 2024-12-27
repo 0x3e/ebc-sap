@@ -1,7 +1,7 @@
 import {describe, eq, it, ok} from "../lib/test.mjs"
+import {FourBitAddressableDisplay} from "../src/display/rams.mjs"
 import * as h from "../src/helpers.mjs"
 import {FourBitAddressable} from "../src/rams.mjs"
-import {FourBitAddressableDisplay} from "../src/rams_display.mjs"
 
 describe("FourBitAddressableDisplay", () => {
   it("txt display", () => {

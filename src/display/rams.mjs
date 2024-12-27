@@ -10,7 +10,7 @@
 *                       IN ----|     |                                   *
 *                              -------                                   *
 \*                                                                      */
-import * as h from "./helpers.mjs"
+import * as h from "../helpers.mjs"
 
 export class FourBitAddressableDisplay {
   #wr = undefined
