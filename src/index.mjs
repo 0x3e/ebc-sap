@@ -6,6 +6,8 @@ import {DFlipFlop} from "./d_flipflop.mjs"
 import {DLatch} from "./d_latch.mjs"
 import {DLatchDisplay} from "./display/d_latch.mjs"
 import * as RamsDisplay from "./display/rams.mjs"
+import {RegisterDisplay} from "./display/register.mjs"
+import {EightBitComputerSimpleAsPossible} from "./ebc_sap.mjs"
 import * as Gates from "./gates.mjs"
 import * as h from "./helpers.mjs"
 import {PubSub} from "./pub_sub.mjs"
@@ -27,6 +29,8 @@ export {
   HalfAdder,
   Rams,
   Register,
+  RegisterDisplay,
   SRLatch,
   h,
+  EightBitComputerSimpleAsPossible,
 }

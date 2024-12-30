@@ -124,6 +124,7 @@ export class MultiBitRegister {
   constructor(bits) {
     this.#register = h.ArrayOf(bits, () => new Register())
   }
+
   sendQ(fun) {
     this.#sendsQ.push(fun)
   }
