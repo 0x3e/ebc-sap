@@ -12,6 +12,7 @@ import "./tests/alu.test.js"
 import "./tests/bus.test.js"
 import "./tests/rams.test.js"
 import "./tests/rams_display.test.js"
+import "./tests/ebc_sap.test.js"
 
 mocha.checkLeaks()
 mocha.run((m) => {
