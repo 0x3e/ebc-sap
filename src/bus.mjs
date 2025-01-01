@@ -50,10 +50,15 @@ export class Bus {
     return this.#BUS
   }
 
+  get Q() {
+    return this.#BUS
+  }
+
   toJSON() {
     return {
       type: this.type,
       BUS: this.#BUS,
+      Q: this.#BUS,
     }
   }
 

@@ -1,15 +1,15 @@
 import {describe, eq, it, ok} from "../lib/test.mjs"
-import {RegisterDisplay} from "../src/display/register.mjs"
+import {BitsDisplay} from "../src/display/bits.mjs"
 import * as h from "../src/helpers.mjs"
 import {MultiBitRegister} from "../src/registers.mjs"
 
 describe("RegisterDisplay", () => {
   it("txt display", () => {
-    const rd = new RegisterDisplay()
+    const rd = new BitsDisplay()
     rd.D = h.nibbles.x1
     eq(rd.txt(), "○ ○ ○ ●")
     const r = new MultiBitRegister(4)
-    rd.register = r
+    rd.watch = r
     r.LOAD = true
     r.OUT = true
     r.D = h.nibbles.x0

@@ -7,7 +7,7 @@ export class ALU {
   #A = undefined
   #B = undefined
 
-  #SUM = undefined
+  #Q = undefined
   #OUT = undefined
 
   #SU = undefined
@@ -17,7 +17,7 @@ export class ALU {
   #TRISTATE = h.ArrayOf(8, () => new Gates.TriState())
   #adder = new EightBitAdder()
 
-  #sendsSUM = []
+  #sendsQ = []
   #sendsOUT = []
   #pubSub = new PubSub()
 
@@ -29,8 +29,8 @@ export class ALU {
     })
   }
 
-  sendSUM(fun) {
-    this.#sendsSUM.push(fun)
+  sendQ(fun) {
+    this.#sendsQ.push(fun)
   }
 
   sendOUT(fun) {
@@ -44,7 +44,7 @@ export class ALU {
   process() {
     //TODO better wiring of these. Collection class to replace ArrayOf
     this.#adder.B = this.#XOR.map(xor => xor.Q)
-    this.#SUM = this.#adder.SUM
+    this.#Q = this.#adder.SUM
     this.#OUT = this.#TRISTATE.map(t => t.Q)
     for (const fun of this.#sendsOUT) {
       fun(this.#OUT)
@@ -97,8 +97,8 @@ export class ALU {
     this.setEU(eu)
   }
 
-  get SUM() {
-    return this.#SUM
+  get Q() {
+    return this.#Q
   }
 
   get OUT() {
@@ -114,7 +114,7 @@ export class ALU {
       type: this.type,
       A: this.#A,
       B: this.#B,
-      SUM: this.#SUM,
+      Q: this.#Q,
       OUT: this.#OUT,
       SU: this.#SU,
       EU: this.#EU,

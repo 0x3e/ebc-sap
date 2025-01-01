@@ -1,23 +1,23 @@
 import * as h from "../helpers.mjs"
-export class RegisterDisplay {
+export class BitsDisplay {
   #D = undefined
 
   #on = "●"
   #off = "○"
 
   #containers = new Set()
-  #register = undefined
-  #register_sub = undefined
+  #watch = undefined
+  #watch_sub = undefined
 
-  set register(r) {
-    if (this.#register === r) return
-    this.#register = r
-    this.#register_sub = r.sub((it = "register") => this.update(it))
-    this.update("register")
+  set watch(w) {
+    if (this.#watch === w) return
+    this.#watch = w
+    this.#watch_sub = w.sub((it = w.type) => this.update(it))
+    this.update(w.type)
   }
 
   update(it) {
-    this.asJSON = this.#register.toJSON()
+    this.asJSON = this.#watch.toJSON()
     for (const con of this.#containers) {
       con.querySelector(".reg").textContent = this.D
     }
@@ -58,6 +58,6 @@ ${this.D}`
   }
 
   set asJSON(json) {
-    this.D = json.Q
+    this.#D = json.Q
   }
 }
