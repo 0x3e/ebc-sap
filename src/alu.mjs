@@ -8,6 +8,7 @@ export class ALU {
   #B = undefined
 
   #SUM = undefined
+  #OUT = undefined
 
   #SU = undefined
   #EU = undefined
@@ -17,6 +18,7 @@ export class ALU {
   #adder = new EightBitAdder()
 
   #sendsSUM = []
+  #sendsOUT = []
   #pubSub = new PubSub()
 
   static type = "ALU"
@@ -31,6 +33,10 @@ export class ALU {
     this.#sendsSUM.push(fun)
   }
 
+  sendOUT(fun) {
+    this.#sendsOUT.push(fun)
+  }
+
   sub(fun) {
     return this.#pubSub.sub(fun)
   }
@@ -38,9 +44,10 @@ export class ALU {
   process() {
     //TODO better wiring of these. Collection class to replace ArrayOf
     this.#adder.B = this.#XOR.map(xor => xor.Q)
-    this.#SUM = this.#TRISTATE.map(t => t.Q)
-    for (const fun of this.#sendsSUM) {
-      fun(this.#SUM)
+    this.#SUM = this.#adder.SUM
+    this.#OUT = this.#TRISTATE.map(t => t.Q)
+    for (const fun of this.#sendsOUT) {
+      fun(this.#OUT)
     }
     this.#pubSub.pub()
   }
@@ -94,6 +101,10 @@ export class ALU {
     return this.#SUM
   }
 
+  get OUT() {
+    return this.#OUT
+  }
+
   get type() {
     return this.constructor.type
   }
@@ -104,6 +115,7 @@ export class ALU {
       A: this.#A,
       B: this.#B,
       SUM: this.#SUM,
+      OUT: this.#OUT,
       SU: this.#SU,
       EU: this.#EU,
     }

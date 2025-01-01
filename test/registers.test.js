@@ -19,33 +19,20 @@ describe("Registers", () => {
     \*                                                 */
     const register = new Register()
     register.LOAD = true
-    register.OUT = false
     register.CLK = false
     register.CLK = true
     register.LOAD = false
-    eq(register.type, "Register")
-    eq(register.toString(), '{"type":"Register","LOAD":false,"OUT":false}')
-    eq(typeof register.Q, "undefined")
+    eq(register.type, "Register.Bit")
+    eq(register.toString(), '{"type":"Register.Bit","LOAD":false,"Q":false}')
+    eq(typeof register.Q, "boolean")
     register.LOAD = true
     register.D = true
     register.CLK = false
     register.CLK = true
     dEq(register.toJSON(), {
-      type: "Register",
+      type: "Register.Bit",
       D: true,
       LOAD: true,
-      OUT: false,
-      Q: undefined,
-    })
-    eq(register.Q, undefined)
-    register.OUT = true
-    register.CLK = false
-    register.CLK = true
-    dEq(register.toJSON(), {
-      type: "Register",
-      D: true,
-      LOAD: true,
-      OUT: true,
       Q: true,
     })
     eq(register.Q, true)
@@ -53,25 +40,24 @@ describe("Registers", () => {
     register.CLK = false
     register.CLK = true
     dEq(register.toJSON(), {
-      type: "Register",
+      type: "Register.Bit",
       D: false,
       LOAD: true,
-      OUT: true,
       Q: false,
     })
     eq(register.Q, false)
   })
-  it("MultiBitRegister", () => {
+  it("Register.Multi", () => {
     const eight_bit_r = new MultiBitRegister(8)
     eight_bit_r.LOAD = true
     eight_bit_r.OUT = false
     eight_bit_r.CLK = false
     eight_bit_r.CLK = true
     eight_bit_r.LOAD = false
-    eq(eight_bit_r.type, "MultiBitRegister")
+    eq(eight_bit_r.type, "Register.Multi")
     eq(
       eight_bit_r.toString(),
-      '{"type":"MultiBitRegister","LOAD":false,"OUT":false,"Q":[null,null,null,null,null,null,null,null]}',
+      '{"type":"Register.Multi","LOAD":false,"OUT":false,"Q":[false,false,false,false,false,false,false,false],"BUS":[null,null,null,null,null,null,null,null]}',
     )
     eight_bit_r.LOAD = true
     eight_bit_r.OUT = true
@@ -80,14 +66,14 @@ describe("Registers", () => {
     eight_bit_r.CLK = true
     eq(
       eight_bit_r.toString(),
-      '{"type":"MultiBitRegister","D":[false,false,false,false,false,false,false,false],"LOAD":true,"OUT":true,"Q":[false,false,false,false,false,false,false,false]}',
+      '{"type":"Register.Multi","D":[false,false,false,false,false,false,false,false],"LOAD":true,"OUT":true,"Q":[false,false,false,false,false,false,false,false],"BUS":[false,false,false,false,false,false,false,false]}',
     )
     eight_bit_r.D = h.bytes.xFF
     eight_bit_r.CLK = false
     eight_bit_r.CLK = true
     eq(
       eight_bit_r.toString(),
-      '{"type":"MultiBitRegister","D":[true,true,true,true,true,true,true,true],"LOAD":true,"OUT":true,"Q":[true,true,true,true,true,true,true,true]}',
+      '{"type":"Register.Multi","D":[true,true,true,true,true,true,true,true],"LOAD":true,"OUT":true,"Q":[true,true,true,true,true,true,true,true],"BUS":[true,true,true,true,true,true,true,true]}',
     )
   })
 })

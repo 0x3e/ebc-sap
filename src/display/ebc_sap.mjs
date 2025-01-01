@@ -1,4 +1,5 @@
 import {FourBitAddressableDisplay} from "./rams.mjs"
+import {RegisterDisplay} from "./register.mjs"
 export class EightBitComputerSimpleAsPossibleHTMLDisplay {
   #cont = undefined
   #pc = undefined
@@ -16,8 +17,8 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
     this.#cont.innerHTML = this.html()
     //this.#pc = new ProgramCounterDisplay()
     //this.#bus = new BusDisplay()
-    this.#mar = new RegisterDisplay()
-    this.#mar.add_container(cont.querySelector("#mar"))
+    //this.#mar = new RegisterDisplay()
+    //this.#mar.add_container(cont.querySelector("#mar"))
     this.#ram = new FourBitAddressableDisplay()
     this.#ram.add_container(cont.querySelector("#ram"))
     this.#a_register = new RegisterDisplay()

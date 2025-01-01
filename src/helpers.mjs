@@ -15,6 +15,18 @@ export function isBits(bits) {
   return bits.every(bit => typeof bit === "boolean")
 }
 
+export function isUndefBits(bits) {
+  if (!Array.isArray(bits)) return false
+  return bits.every(bit => bit === undefined)
+}
+
+export function ArrayShallowEq(a1, a2) {
+  return (
+    a1.length === a2.length &&
+    a1.every((value, index) => value === a2[index])
+  )
+}
+
 export function throwOnNaB(...args) {
   for (const bit of Array.from(args).flat()) {
     if (typeof bit !== "boolean") throw new Error("NaB")

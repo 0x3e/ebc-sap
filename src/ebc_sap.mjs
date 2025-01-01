@@ -17,6 +17,31 @@ export class EightBitComputerSimpleAsPossible {
   #output = undefined
   #display = undefined
 
+  constructor() {
+    //TODO move to init from ir
+    this.#a_register.setLOAD(false)
+    this.#a_register.setOUT(false)
+    this.#alu.setSU(false)
+    this.#alu.setEU(false)
+    this.#b_register.setLOAD(false)
+    this.#b_register.setOUT(false)
+
+    //    this.#ram.sendOUT(OUT => this.#bus.io(OUT))
+
+    this.#a_register.sendBUS(BUS => this.#bus.io(BUS))
+    this.#a_register.sendQ(Q => this.#alu.setA(Q))
+
+    this.#alu.sendOUT(OUT => this.#bus.io(OUT))
+
+    this.#b_register.sendBUS(BUS => this.#bus.io(BUS))
+    this.#b_register.sendQ(Q => this.#alu.setB(Q))
+
+    this.#bus.sendBUS(BUS => this.#a_register.setD(BUS))
+    //    this.#bus.sendBUS(BUS => this.#mar.setD(BUS))
+    this.#bus.sendBUS(BUS => this.#b_register.setD(BUS))
+    //    this.#bus.sendBUS(BUS => this.#ram.setIN(BUS))
+  }
+
   browser_init(cont) {
     const ebc_cont = document.getElementById(cont)
     this.#display = new EightBitComputerSimpleAsPossibleHTMLDisplay(ebc_cont)
@@ -30,5 +55,21 @@ export class EightBitComputerSimpleAsPossible {
     this.#display.b_register = this.#b_register
     this.#display.ir = this.#ir
     this.#display.output = this.#output
+  }
+
+  get bus() {
+    return this.#bus
+  }
+
+  get a_register() {
+    return this.#a_register
+  }
+
+  get alu() {
+    return this.#alu
+  }
+
+  get b_register() {
+    return this.#b_register
   }
 }

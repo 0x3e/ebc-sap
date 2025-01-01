@@ -3,18 +3,39 @@ import * as h from "./helpers.mjs"
 import {PubSub} from "./pub_sub.mjs"
 
 export class Bus {
-  #BYTE = []
+  #BUS = h.bytes.xZZ
+  #num = 0
 
+  #sendsBUS = []
   #pubSub = new PubSub()
 
   static type = "Bus"
 
+  sendBUS(fun) {
+    this.#sendsBUS.push(fun)
+  }
+
   io(Byte) {
-    for (const [i, bit] of Byte.entries())
-      this.#BYTE[i] = bit ?? this.#BYTE[i]
+    if (this.#num > 20) {
+      this.#num = 0
+      return this.#BUS
+    }
+    if (h.isUndefBits(Byte)) return this.#BUS
+    if (this.#BUS === Byte) return Byte
+    if (h.ArrayShallowEq(this.#BUS, Byte)) {
+      this.#BUS = Byte
+      return Byte
+    }
+    this.#num += 1
+    const bus = this.#BUS.slice()
+    for (const [i, bit] of Byte.entries()) {
+      if (bit !== undefined) bus[i] = bit
+    }
+    this.#BUS = bus
+    for (const fun of this.#sendsBUS) fun(bus)
     this.#pubSub.pub()
 
-    return this.#BYTE
+    return this.#BUS
   }
 
   sub(fun) {
@@ -25,10 +46,14 @@ export class Bus {
     return this.constructor.type
   }
 
+  get BUS() {
+    return this.#BUS
+  }
+
   toJSON() {
     return {
       type: this.type,
-      BUS: this.#BYTE,
+      BUS: this.#BUS,
     }
   }
 

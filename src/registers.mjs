@@ -6,17 +6,15 @@ import {PubSub} from "./pub_sub.mjs"
 export class Register {
   #D = undefined
   #LOAD = undefined
-  #OUT = undefined
   #Q = undefined
   #CLK = undefined
   #INV = new Gates.NOT()
   #AND = [new Gates.AND(), new Gates.AND()]
   #OR = new Gates.OR()
   #DFLIPFLOP = new DFlipFlop()
-  #TRISTATE = new Gates.TriState()
   #pubSub = new PubSub()
 
-  static type = "Register"
+  static type = "Register.Bit"
 
   constructor() {
     this.#INV.sendQ(Q => this.#AND[0].setB(Q))
@@ -24,11 +22,10 @@ export class Register {
     this.#AND[1].sendQ(Q => this.#OR.setB(Q))
     this.#OR.sendQ(Q => this.#DFLIPFLOP.setD(Q))
     this.#DFLIPFLOP.sendQ(Q => this.#AND[0].setA(Q))
-    this.#DFLIPFLOP.sendQ(Q => this.#TRISTATE.setA(Q))
   }
 
   sendQ(fun) {
-    this.#TRISTATE.sendQ(fun)
+    this.#DFLIPFLOP.sendQ(fun)
   }
 
   sub(fun) {
@@ -36,7 +33,7 @@ export class Register {
   }
 
   process() {
-    this.#Q = this.#TRISTATE.Q
+    this.#Q = this.#DFLIPFLOP.Q
     this.#pubSub.pub()
   }
 
@@ -63,17 +60,6 @@ export class Register {
     this.setLOAD(l)
   }
 
-  setOUT(o) {
-    if (this.#OUT === o) return
-    this.#OUT = o
-    this.#TRISTATE.B = o
-    this.process()
-  }
-
-  set OUT(o) {
-    this.setOUT(o)
-  }
-
   setCLK(clk) {
     this.#DFLIPFLOP.setCLK(clk)
     if (this.#CLK === clk) return
@@ -98,7 +84,6 @@ export class Register {
       type: this.type,
       D: this.#D,
       LOAD: this.#LOAD,
-      OUT: this.#OUT,
       Q: this.#Q,
     }
   }
@@ -113,20 +98,31 @@ export class MultiBitRegister {
   #LOAD = undefined
   #OUT = undefined
   #Q = undefined
+  #BUS = undefined
   #CLK = undefined
   #register = undefined
+  #tristate = undefined
 
   #sendsQ = []
+  #sendsBUS = []
   #pubSub = new PubSub()
 
-  static type = "MultiBitRegister"
+  static type = "Register.Multi"
 
   constructor(bits) {
     this.#register = h.ArrayOf(bits, () => new Register())
+    this.#tristate = h.ArrayOf(bits, () => new Gates.TriState())
+    for (let i = 0; i < bits; i++) {
+      this.#register[i].sendQ(Q => this.#tristate[i].setA(Q))
+    }
   }
 
   sendQ(fun) {
     this.#sendsQ.push(fun)
+  }
+
+  sendBUS(fun) {
+    this.#sendsBUS.push(fun)
   }
 
   sub(fun) {
@@ -135,8 +131,12 @@ export class MultiBitRegister {
 
   process() {
     this.#Q = this.#register.map(register => register.Q)
+    this.#BUS = this.#tristate.map(t => t.Q)
     for (const fun of this.#sendsQ) {
       fun(this.#Q)
+    }
+    for (const fun of this.#sendsBUS) {
+      fun(this.#BUS)
     }
     this.#pubSub.pub()
   }
@@ -166,7 +166,7 @@ export class MultiBitRegister {
   setOUT(o) {
     if (this.#OUT === o) return
     this.#OUT = o
-    for (const reg of this.#register) reg.setOUT(o)
+    for (const t of this.#tristate) t.setB(o)
     this.process()
   }
 
@@ -189,6 +189,10 @@ export class MultiBitRegister {
     return this.#Q
   }
 
+  get BUS() {
+    return this.#BUS
+  }
+
   get type() {
     return this.constructor.type
   }
@@ -200,6 +204,7 @@ export class MultiBitRegister {
       LOAD: this.#LOAD,
       OUT: this.#OUT,
       Q: this.#Q,
+      BUS: this.#BUS,
     }
   }
 

@@ -14,14 +14,15 @@ describe("ALU", () => {
       type: "ALU",
       A: h.bytes.x00,
       B: h.bytes.x00,
-      SUM: h.bytes.xZZ,
+      SUM: h.bytes.x00,
+      OUT: h.bytes.xZZ,
       SU: false,
       EU: false,
     })
-    alu.EU = true
     dEq(alu.SUM, [false, false, false, false, false, false, false, false])
+    alu.EU = true
     alu.EU = false
-    dEq(alu.SUM, h.bytes.xZZ)
+    dEq(alu.OUT, h.bytes.xZZ)
     alu.A = h.bytes.x0F
     alu.B = h.bytes.x01
     alu.EU = true

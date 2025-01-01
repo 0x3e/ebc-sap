@@ -2,8 +2,8 @@ import * as h from "../helpers.mjs"
 export class RegisterDisplay {
   #D = undefined
 
-  #on = "⬤"
-  #off = "◯"
+  #on = "●"
+  #off = "○"
 
   #containers = new Set()
   #register = undefined
@@ -19,7 +19,7 @@ export class RegisterDisplay {
   update(it) {
     this.asJSON = this.#register.toJSON()
     for (const con of this.#containers) {
-      con.querySelector("").textContent = this.#D.toString()
+      con.querySelector(".reg").textContent = this.D
     }
   }
 
@@ -44,7 +44,7 @@ ${this.D}`
 
   html() {
     return `\
-${this.D}`
+<div class=reg>${this.D}</div>`
   }
 
   set D(d) {
@@ -53,10 +53,11 @@ ${this.D}`
   }
 
   get D() {
+    if (this.#D === undefined) return ""
     return this.#D.map(d => (d ? this.#on : this.#off)).join(" ")
   }
 
   set asJSON(json) {
-    if (json.LOAD) this.D = json.D
+    this.D = json.Q
   }
 }
