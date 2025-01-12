@@ -5,7 +5,7 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
   #pc = undefined
   #bus = undefined
   #mar = undefined
-  #ram = undefined
+  //  #ram = undefined
   #a_register = undefined
   #alu = undefined
   #b_register = undefined
@@ -18,10 +18,10 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
     //this.#pc = new ProgramCounterDisplay()
     this.#bus = new BitsDisplay()
     this.#bus.add_container(cont.querySelector("#bus"))
-    //this.#mar = new BitsDisplay()
-    //this.#mar.add_container(cont.querySelector("#mar"))
-    //this.#ram = new FourBitAddressableDisplay()
-    //this.#ram.add_container(cont.querySelector("#ram"))
+    this.#mar = new BitsDisplay()
+    this.#mar.add_container(cont.querySelector("#mar"))
+    //    this.#ram = new FourBitAddressableDisplay()
+    //    this.#ram.add_container(cont.querySelector("#ram"))
     this.#a_register = new BitsDisplay()
     this.#a_register.add_container(cont.querySelector("#a_register"))
     this.#alu = new BitsDisplay()
@@ -37,11 +37,11 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
   set bus(bus) {
     this.#bus.watch = bus
   }
-  set mar(mar) {
-    //    this.#mar.mar = mar
+  set mar(m) {
+    this.#mar.watch = m
   }
   set ram(ram) {
-    //this.#ram.fourBitAddressable = ram
+    //    this.#ram.fourBitAddressable = ram
   }
   set a_register(r) {
     this.#a_register.watch = r

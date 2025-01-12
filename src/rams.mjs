@@ -7,6 +7,7 @@ export class Bit {
   #WR = undefined
   #EN = undefined
   #IN = undefined
+  #Q = undefined
   #OUT = undefined
 
   #DLatch = new DLatch()
@@ -181,6 +182,7 @@ export class FourBitAddressable {
   #ADDR = undefined
   #IN = undefined
   #OUT = undefined
+  #BUS = undefined
 
   #word = h.ArrayOf(16, () => new EightBitWord())
 
@@ -203,9 +205,9 @@ export class FourBitAddressable {
       this.#word[h.bitsToInt(this.#ADDR)].setEN(this.#EN)
       this.#word[h.bitsToInt(this.#ADDR)].setIN(this.#IN)
       this.#OUT = this.#word[h.bitsToInt(this.#ADDR)].OUT
+      for (const fun of this.#sendsOUT) fun(this.#OUT)
+      this.#pubSub.pub()
     }
-    for (const fun of this.#sendsOUT) fun(this.#OUT)
-    this.#pubSub.pub()
   }
 
   setWR(wr) {

@@ -9,7 +9,7 @@ export class EightBitComputerSimpleAsPossible {
   #pc = undefined
   #bus = new Bus()
   #mar = new MultiBitRegister(4)
-  #ram = new FourBitAddressable()
+  //  #ram = new FourBitAddressable()
   #a_register = new MultiBitRegister(8)
   #alu = new ALU()
   #b_register = new MultiBitRegister(8)
@@ -19,6 +19,8 @@ export class EightBitComputerSimpleAsPossible {
 
   constructor() {
     //TODO move to init from ir
+    this.#mar.setLOAD(false)
+    this.#mar.setOUT(false)
     this.#a_register.setLOAD(false)
     this.#a_register.setOUT(false)
     this.#alu.setSU(false)
@@ -26,7 +28,8 @@ export class EightBitComputerSimpleAsPossible {
     this.#b_register.setLOAD(false)
     this.#b_register.setOUT(false)
 
-    //    this.#ram.sendOUT(OUT => this.#bus.io(OUT))
+    this.#mar.sendBUS(BUS => this.#bus.io(BUS))
+    this.#mar.sendQ(Q => this.#alu.setA(Q))
 
     this.#a_register.sendBUS(BUS => this.#bus.io(BUS))
     this.#a_register.sendQ(Q => this.#alu.setA(Q))
@@ -36,10 +39,9 @@ export class EightBitComputerSimpleAsPossible {
     this.#b_register.sendBUS(BUS => this.#bus.io(BUS))
     this.#b_register.sendQ(Q => this.#alu.setB(Q))
 
+    this.#bus.sendBUS(BUS => this.#mar.setD(BUS))
     this.#bus.sendBUS(BUS => this.#a_register.setD(BUS))
-    //    this.#bus.sendBUS(BUS => this.#mar.setD(BUS))
     this.#bus.sendBUS(BUS => this.#b_register.setD(BUS))
-    //    this.#bus.sendBUS(BUS => this.#ram.setIN(BUS))
   }
 
   browser_init(cont) {
@@ -49,7 +51,7 @@ export class EightBitComputerSimpleAsPossible {
     this.#display.pc = this.#pc
     this.#display.bus = this.#bus
     this.#display.mar = this.#mar
-    this.#display.ram = this.#ram
+    //    this.#display.ram = this.#ram
     this.#display.a_register = this.#a_register
     this.#display.alu = this.#alu
     this.#display.b_register = this.#b_register
@@ -67,6 +69,10 @@ export class EightBitComputerSimpleAsPossible {
 
   get alu() {
     return this.#alu
+  }
+
+  get mar() {
+    return this.#mar
   }
 
   get b_register() {
