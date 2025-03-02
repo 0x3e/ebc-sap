@@ -12,5 +12,6 @@ describe("Clock", () => {
     eq(c.output, true)
     c.manual_pulse = false
     eq(c.output, false)
+    c.destroy()
   })
 })

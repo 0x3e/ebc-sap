@@ -5,6 +5,7 @@ import * as h from "../src/helpers.mjs"
 describe("EightBitComputerSimpleAsPossible", () => {
   it("init", () => {
     const ebc_sap = new EightBitComputerSimpleAsPossible()
+    ebc_sap.destroy()
   })
   it("bus alu", () => {
     const ebc_sap = new EightBitComputerSimpleAsPossible()
@@ -25,5 +26,6 @@ describe("EightBitComputerSimpleAsPossible", () => {
       h.bitsToInt(ebc_sap.bus.BUS),
       h.bitsToInt([true, true, true, true, true, true, true, true]),
     )
+    ebc_sap.destroy()
   })
 })

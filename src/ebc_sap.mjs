@@ -1,11 +1,12 @@
 import {ALU} from "./alu.mjs"
 import {Bus} from "./bus.mjs"
+import {Clock} from "./clock.mjs"
 import {EightBitComputerSimpleAsPossibleHTMLDisplay} from "./display/ebc_sap.mjs"
 import * as h from "./helpers.mjs"
 import {FourBitAddressable} from "./rams.mjs"
 import {MultiBitRegister} from "./registers.mjs"
 export class EightBitComputerSimpleAsPossible {
-  #clock = undefined
+  #clock = new Clock()
   #pc = undefined
   #bus = new Bus()
   #mar = new MultiBitRegister(4)
@@ -42,6 +43,11 @@ export class EightBitComputerSimpleAsPossible {
     this.#bus.sendBUS(BUS => this.#mar.setD(BUS))
     this.#bus.sendBUS(BUS => this.#a_register.setD(BUS))
     this.#bus.sendBUS(BUS => this.#b_register.setD(BUS))
+  }
+
+  destroy() {
+    this.#clock.destroy()
+    this.#clock = null
   }
 
   browser_init(cont) {

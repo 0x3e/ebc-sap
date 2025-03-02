@@ -29,6 +29,7 @@ export class Clock {
   #sendsQ = []
   #pubSub = new PubSub()
 
+  #timeoutObj = undefined
   #AND = h.ArrayOf(3, () => new Gates.AND())
   #OR = new Gates.OR()
   #NOT = [new Gates.NOT(), new Gates.NOT()]
@@ -36,11 +37,20 @@ export class Clock {
   static type = "Clock"
 
   constructor() {
+    const toggle_astable_pulse = () => {
+      this.astable_pulse = !this.astable_pulse
+    }
+    this.#timeoutObj = setInterval(toggle_astable_pulse, 250)
     this.#AND[0].sendQ(Q => this.#OR.setA(Q))
     this.#OR.sendQ(Q => this.#AND[2].setA(Q))
     this.#NOT[0].sendQ(Q => this.#AND[1].setA(Q))
     this.#AND[1].sendQ(Q => this.#OR.setB(Q))
     this.#NOT[1].sendQ(Q => this.#AND[2].setB(Q))
+  }
+
+  destroy() {
+    clearInterval(this.#timeoutObj)
+    this.#sendsQ = []
   }
 
   sendQ(fun) {
