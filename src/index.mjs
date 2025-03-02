@@ -2,6 +2,7 @@ import {EightBitAdder, FullAdder, HalfAdder} from "./adders.mjs"
 import {ALU} from "./alu.mjs"
 import {ANDEdgeDetector} from "./and_edge_detector.mjs"
 import {Bus} from "./bus.mjs"
+import {Clock} from "./clock.mjs"
 import {DFlipFlop} from "./d_flipflop.mjs"
 import {DLatch} from "./d_latch.mjs"
 import {BitsDisplay} from "./display/bits.mjs"
@@ -19,6 +20,7 @@ export {
   ANDEdgeDetector,
   BitsDisplay,
   Bus,
+  Clock,
   DFlipFlop,
   DLatch,
   DLatchDisplay,

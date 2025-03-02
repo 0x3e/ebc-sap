@@ -4,7 +4,7 @@
 *  astable_pulse ----------------|&&\0                                   *
 *                                |&& )--.                                *
 *                  .-------------|&&/   |                                *
-*                  |                    `--\OR\1                         *
+*                  |                    `--\OR\                          *
 *  select ---------|    | \0                )OR)----|&&\2                *
 *                  `----|N )o----|&&\1 .---/OR/     |&& )---- output     *
 *                       | /      |&& )-'        .---|&&/                 *
@@ -30,14 +30,14 @@ export class Clock {
   #pubSub = new PubSub()
 
   #AND = h.ArrayOf(3, () => new Gates.AND())
-  #OR = h.ArrayOf(3, () => new Gates.OR())
+  #OR = new Gates.OR()
   #NOT = [new Gates.NOT(), new Gates.NOT()]
 
   static type = "Clock"
 
   constructor() {
-    this.#AND[0].sendQ(Q => this.#OR[0].setA(Q))
-    this.#OR[0].sendQ(Q => this.#AND[2].setA(Q))
+    this.#AND[0].sendQ(Q => this.#OR.setA(Q))
+    this.#OR.sendQ(Q => this.#AND[2].setA(Q))
     this.#NOT[0].sendQ(Q => this.#AND[1].setA(Q))
     this.#AND[1].sendQ(Q => this.#OR.setB(Q))
     this.#NOT[1].sendQ(Q => this.#AND[2].setB(Q))
@@ -54,9 +54,10 @@ export class Clock {
   process() {
     this.#AND[0].setA(this.#astable_pulse)
     this.#AND[0].setB(this.#select)
-    this.#NOT[0].setB(this.#select)
+    this.#NOT[0].set(this.#select)
     this.#AND[1].setB(this.#manual_pulse)
-    this.#NOT[1].setA(this.#HLT)
+    this.#NOT[1].set(this.#HLT)
+    this.#Q = this.#AND[2].Q
     for (const fun of this.#sendsQ) {
       fun(this.#Q)
     }
@@ -91,5 +92,28 @@ export class Clock {
 
   set HLT(h) {
     this.setHLT(h)
+  }
+
+  get output() {
+    return this.#Q
+  }
+
+  get type() {
+    return this.constructor.type
+  }
+
+  toJSON() {
+    return {
+      type: this.type,
+      astable_pulse: this.#astable_pulse,
+      select: this.#select,
+      manual_pulse: this.#manual_pulse,
+      HLT: this.#HLT,
+      output: this.#Q,
+    }
+  }
+
+  toString() {
+    return JSON.stringify(this.toJSON())
   }
 }
