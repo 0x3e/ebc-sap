@@ -9,6 +9,7 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
   #a_register = undefined
   #alu = undefined
   #b_register = undefined
+  #clock = undefined
   #ir = undefined
   #output = undefined
 
@@ -16,6 +17,7 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
     this.#cont = cont
     this.#cont.innerHTML = this.html()
     //this.#pc = new ProgramCounterDisplay()
+    this.#clock = new BitsDisplay()
     this.#bus = new BitsDisplay()
     this.#bus.add_container(cont.querySelector("#bus"))
     this.#mar = new BitsDisplay()

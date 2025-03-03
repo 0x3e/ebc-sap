@@ -37,10 +37,6 @@ export class Clock {
   static type = "Clock"
 
   constructor() {
-    const toggle_astable_pulse = () => {
-      this.astable_pulse = !this.astable_pulse
-    }
-    this.#timeoutObj = setInterval(toggle_astable_pulse, 250)
     this.#AND[0].sendQ(Q => this.#OR.setA(Q))
     this.#OR.sendQ(Q => this.#AND[2].setA(Q))
     this.#NOT[0].sendQ(Q => this.#AND[1].setA(Q))
@@ -48,8 +44,19 @@ export class Clock {
     this.#NOT[1].sendQ(Q => this.#AND[2].setB(Q))
   }
 
-  destroy() {
+  start_interval() {
+    const toggle_astable_pulse = () => {
+      this.astable_pulse = !this.astable_pulse
+    }
+    this.#timeoutObj = setInterval(toggle_astable_pulse, 250)
+  }
+
+  stop_interval() {
     clearInterval(this.#timeoutObj)
+  }
+
+  destroy() {
+    this.stop_interval()
     this.#sendsQ = []
   }
 
@@ -76,6 +83,7 @@ export class Clock {
 
   setManualPulse(p) {
     if (this.#manual_pulse === p) return
+    if (p) this.start_interval()
     this.#manual_pulse = p
     this.process()
   }
