@@ -28,6 +28,9 @@ export class EightBitComputerSimpleAsPossible {
     this.#alu.setEU(false)
     this.#b_register.setLOAD(false)
     this.#b_register.setOUT(false)
+    this.#clock.setHLT(false)
+    this.#clock.setSelect(false)
+    this.#clock.setManualPulse(false)
 
     this.#mar.sendBUS(BUS => this.#bus.io(BUS))
     this.#mar.sendQ(Q => this.#alu.setA(Q))
