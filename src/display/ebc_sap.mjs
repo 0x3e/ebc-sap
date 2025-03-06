@@ -17,9 +17,10 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
     this.#cont = cont
     this.#cont.innerHTML = this.html()
     //this.#pc = new ProgramCounterDisplay()
-    this.#clock = new BitsDisplay()
     this.#bus = new BitsDisplay()
     this.#bus.add_container(cont.querySelector("#bus"))
+    this.#clock = new BitsDisplay()
+    this.#clock.add_container(cont.querySelector("#clock"))
     this.#mar = new BitsDisplay()
     this.#mar.add_container(cont.querySelector("#mar"))
     //    this.#ram = new FourBitAddressableDisplay()
@@ -42,6 +43,9 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
   set mar(m) {
     this.#mar.watch = m
   }
+  set clock(c) {
+    this.#clock.watch = c
+  }
   set ram(ram) {
     //    this.#ram.fourBitAddressable = ram
   }
@@ -62,6 +66,6 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
   }
   html() {
     return `\
-<div id=pc></div><div id=bus></div><div id=mar></div><div id=ram></div><div id=a_register></div><div id=alu></div><div id=b_register></div><div id=ir></div><div id=output></div>`
+<div id=clock></div><div id=pc></div><div id=bus></div><div id=mar></div><div id=ram></div><div id=a_register></div><div id=alu></div><div id=b_register></div><div id=ir></div><div id=output></div>`
   }
 }

@@ -55,7 +55,9 @@ export class EightBitComputerSimpleAsPossible {
 
   browser_init(cont) {
     const ebc_cont = document.getElementById(cont)
-    this.#display = new EightBitComputerSimpleAsPossibleHTMLDisplay(ebc_cont)
+    this.#display = new EightBitComputerSimpleAsPossibleHTMLDisplay(
+      ebc_cont
+    )
     this.#display.clock = this.#clock
     this.#display.pc = this.#pc
     this.#display.bus = this.#bus
@@ -70,6 +72,10 @@ export class EightBitComputerSimpleAsPossible {
 
   get bus() {
     return this.#bus
+  }
+
+  get clock() {
+    return this.#clock
   }
 
   get a_register() {
