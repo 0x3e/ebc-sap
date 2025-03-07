@@ -22,7 +22,7 @@ import {PubSub} from "./pub_sub.mjs"
 
 export class Clock {
   #astable_pulse = undefined
-  #interval = 250
+  #interval = 1000
   #select = undefined
   #manual_pulse = undefined
   #HLT = undefined
@@ -47,7 +47,7 @@ export class Clock {
 
   start_interval() {
     const toggle_astable_pulse = () => {
-      this.astable_pulse = !this.astable_pulse
+      this.astable_pulse = !this.#astable_pulse
     }
     this.#timeoutObj = setInterval(toggle_astable_pulse, this.#interval)
   }
@@ -85,15 +85,22 @@ export class Clock {
   setManualPulse(p) {
     if (this.#manual_pulse === p) return
 
-    if (p) this.stop_interval()
-    else this.start_interval()
-
     this.#manual_pulse = p
     this.process()
   }
 
   set manual_pulse(p) {
     this.setManualPulse(p)
+  }
+
+  setAstablePulse(p) {
+    if (!this.#select) this.stop_interval()
+    this.#astable_pulse = p
+    this.process()
+  }
+
+  set astable_pulse(p) {
+    this.setAstablePulse(p)
   }
 
   setInterval(i) {
@@ -113,6 +120,8 @@ export class Clock {
     if (this.#select === s) return
     this.#select = s
     this.process()
+    if (this.#select) this.start_interval()
+    else this.stop_interval()
   }
 
   set select(s) {
@@ -122,6 +131,8 @@ export class Clock {
   setHLT(h) {
     if (this.#HLT === h) return
     this.#HLT = h
+    if (h) this.stop_interval()
+    else this.start_interval()
     this.process()
   }
 
@@ -146,6 +157,7 @@ export class Clock {
       manual_pulse: this.#manual_pulse,
       HLT: this.#HLT,
       output: this.#Q,
+      Q: [this.#Q],
     }
   }
 
