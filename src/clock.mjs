@@ -113,7 +113,11 @@ export class Clock {
   }
 
   set interval(i) {
+    if (this.#interval === i) return
     this.setInterval(i)
+    if (!this.#select) return
+    this.stop_interval()
+    this.start_interval()
   }
 
   setSelect(s) {
