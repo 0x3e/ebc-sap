@@ -71,14 +71,7 @@ export class ProgramCounter {
   setJUMP(j) {
     if (this.#JUMP === j) return
     this.#JUMP = j
-    if (this.#JUMP === false) return
-    if (this.#JUMP === 'tick') return
-    if (this.#JUMP === 'tock') {
-      for (let i = 0; i < this.#counter_size; i++) {
-        this.#jk_flipflop[i].J = true
-        this.#jk_flipflop[i].K = true
-      }
-    } else {
+    if (Array.isArray(this.#JUMP)) {
       for (let i = 0; i < this.#counter_size; i++) {
         if (j[i]) {
           this.#jk_flipflop[i].J = true
@@ -88,7 +81,15 @@ export class ProgramCounter {
           this.#jk_flipflop[i].K = true
         }
       }
-      this.#JUMP = 'tick'
+      this.#JUMP = 1
+    }
+
+    if (this.#JUMP === 4) {
+      for (let i = 0; i < this.#counter_size; i++) {
+        this.#jk_flipflop[i].J = true
+        this.#jk_flipflop[i].K = true
+      }
+      this.#JUMP = false
     }
 
     this.process()
@@ -109,11 +110,14 @@ export class ProgramCounter {
 
   setCLK(clk) {
     if (this.#CLK === clk) return
-    if (this.#JUMP === 'tick') this.#JUMP = 'tock'
-    if (this.#JUMP === 'tock') this.#JUMP = false
-    if (!this.#ENABLE && !this.#JUMP) return
     this.#CLK = clk
-    for (const jk of this.#jk_flipflop) jk.setCLK(clk)
+    if (Number.isInteger(this.#JUMP) && this.#JUMP < 4 ) this.JUMP = this.#JUMP + 1 
+    if (!this.#ENABLE && !this.#JUMP) return
+
+    if (this.#JUMP)
+      for (const jk of this.#jk_flipflop) jk.setCLK(clk)
+    else 
+      this.#jk_flipflop[0].setCLK(clk)
 
     this.process()
   }
