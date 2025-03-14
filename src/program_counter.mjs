@@ -22,7 +22,10 @@ export class ProgramCounter {
 
   constructor() {
     this.#jk_flipflop = h.ArrayOf(this.#counter_size, () => new JKFlipFlop())
-    this.#tristate = h.ArrayOf(this.#counter_size, () => new Gates.TriState())
+    this.#tristate = h.ArrayOf(
+      this.#counter_size,
+      () => new Gates.TriState(),
+    )
     for (let i = 0; i < this.#counter_size; i++) {
       this.#jk_flipflop[i].J = true
       this.#jk_flipflop[i].K = true
@@ -111,13 +114,12 @@ export class ProgramCounter {
   setCLK(clk) {
     if (this.#CLK === clk) return
     this.#CLK = clk
-    if (Number.isInteger(this.#JUMP) && this.#JUMP < 4 ) this.JUMP = this.#JUMP + 1 
+    if (Number.isInteger(this.#JUMP) && this.#JUMP < 4)
+      this.JUMP = this.#JUMP + 1
     if (!this.#ENABLE && !this.#JUMP) return
 
-    if (this.#JUMP)
-      for (const jk of this.#jk_flipflop) jk.setCLK(clk)
-    else 
-      this.#jk_flipflop[0].setCLK(clk)
+    if (this.#JUMP) for (const jk of this.#jk_flipflop) jk.setCLK(clk)
+    else this.#jk_flipflop[0].setCLK(clk)
 
     this.process()
   }
