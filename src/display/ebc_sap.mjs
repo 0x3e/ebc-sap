@@ -16,7 +16,8 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
   constructor(cont) {
     this.#cont = cont
     this.#cont.innerHTML = this.html()
-    //this.#pc = new ProgramCounterDisplay()
+    this.#pc = new BitsDisplay()
+    this.#pc.add_container(cont.querySelector("#pc"))
     this.#bus = new BitsDisplay()
     this.#bus.add_container(cont.querySelector("#bus"))
     this.#clock = new BitsDisplay()
@@ -35,7 +36,7 @@ export class EightBitComputerSimpleAsPossibleHTMLDisplay {
     //this.#output = new OutputDisplay()
   }
   set pc(pc) {
-    //    this.#pc.pc = pc
+    this.#pc.watch = pc
   }
   set bus(bus) {
     this.#bus.watch = bus

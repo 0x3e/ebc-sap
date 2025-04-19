@@ -3,14 +3,15 @@ import {Bus} from "./bus.mjs"
 import {Clock} from "./clock.mjs"
 import {EightBitComputerSimpleAsPossibleHTMLDisplay} from "./display/ebc_sap.mjs"
 import * as h from "./helpers.mjs"
+import {ProgramCounter} from "./program_counter.mjs"
 import {FourBitAddressable} from "./rams.mjs"
 import {MultiBitRegister} from "./registers.mjs"
 export class EightBitComputerSimpleAsPossible {
   #clock = new Clock()
-  #pc = undefined
+  #pc = new ProgramCounter()
   #bus = new Bus()
   #mar = new MultiBitRegister(4)
-  //  #ram = new FourBitAddressable()
+  #ram = new FourBitAddressable()
   #a_register = new MultiBitRegister(8)
   #alu = new ALU()
   #b_register = new MultiBitRegister(8)
@@ -19,7 +20,14 @@ export class EightBitComputerSimpleAsPossible {
   #display = undefined
 
   constructor() {
-    //TODO move to init from ir
+    //TODO move to init from instruction maybe
+    this.#pc.setOUT(false)
+    this.#pc.setENABLE(false)
+    this.#pc.setJUMP(h.nibbles.x0)
+    this.#pc.CLK = true
+    this.#pc.CLK = false
+    this.#pc.CLK = true
+    this.#pc.CLK = false
     this.#mar.setLOAD(false)
     this.#mar.setOUT(false)
     this.#a_register.setLOAD(false)
@@ -32,8 +40,9 @@ export class EightBitComputerSimpleAsPossible {
     this.#clock.setSelect(false)
     this.#clock.setManualPulse(false)
 
-    this.#mar.sendBUS(BUS => this.#bus.io(BUS))
-    this.#mar.sendQ(Q => this.#alu.setA(Q))
+    this.#pc.sendBUS(BUS => this.#bus.io(BUS))
+
+    this.#mar.sendQ(Q => this.#ram.setADDR(Q))
 
     this.#a_register.sendBUS(BUS => this.#bus.io(BUS))
     this.#a_register.sendQ(Q => this.#alu.setA(Q))
@@ -43,6 +52,7 @@ export class EightBitComputerSimpleAsPossible {
     this.#b_register.sendBUS(BUS => this.#bus.io(BUS))
     this.#b_register.sendQ(Q => this.#alu.setB(Q))
 
+    this.#bus.sendBUS(BUS => this.#pc.setJUMP(BUS))
     this.#bus.sendBUS(BUS => this.#mar.setD(BUS))
     this.#bus.sendBUS(BUS => this.#a_register.setD(BUS))
     this.#bus.sendBUS(BUS => this.#b_register.setD(BUS))
@@ -70,6 +80,10 @@ export class EightBitComputerSimpleAsPossible {
 
   get bus() {
     return this.#bus
+  }
+
+  get pc() {
+    return this.#pc
   }
 
   get clock() {

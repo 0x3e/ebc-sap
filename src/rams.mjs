@@ -200,7 +200,7 @@ export class FourBitAddressable {
   }
 
   process() {
-    if (this.#ADDR) {
+    if (h.isBits(this.#ADDR)) {
       this.#word[h.bitsToInt(this.#ADDR)].setWR(this.#WR)
       this.#word[h.bitsToInt(this.#ADDR)].setEN(this.#EN)
       this.#word[h.bitsToInt(this.#ADDR)].setIN(this.#IN)
@@ -232,7 +232,7 @@ export class FourBitAddressable {
 
   setADDR(addr) {
     if (this.#ADDR === addr) return
-    if (this.#ADDR) {
+    if (h.isBits(this.#ADDR)) {
       this.#word[h.bitsToInt(this.#ADDR)].setWR(false)
       this.#word[h.bitsToInt(this.#ADDR)].setEN(false)
     }
